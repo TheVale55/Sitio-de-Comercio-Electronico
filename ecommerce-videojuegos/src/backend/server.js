@@ -11,7 +11,7 @@ mongoose.connect('mongodb://localhost:27017/?readPreference=primary&ssl=false&di
 });
 
 mongoose.connection.on('connected', () => {
-  console.log('Conectado a MongoDB en Azure');
+  console.log('Conectado a MongoDB');
 });
 
 app.listen(port, () => {
