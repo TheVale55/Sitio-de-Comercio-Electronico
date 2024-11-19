@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 const gameSchema = new Schema({
   Game_ID: {
     type: Number,
-    required: true,
   },
   Game_Name: {
     type: String,

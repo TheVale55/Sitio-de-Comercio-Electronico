@@ -4,7 +4,7 @@ const Game = require('../models/game');
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find({ IsActive: true });
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -14,7 +14,7 @@ const getAllUsers = async (req, res) => {
 // Obtener un usuario por ID
 const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id, { IsActive: true });
     if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
@@ -26,6 +26,7 @@ const getUserById = async (req, res) => {
 
 // Crear un nuevo usuario
 const createUser = async (req, res) => {
+  console.log(req.body)
   const user = new User(req.body);
   try {
     const newUser = await user.save();
