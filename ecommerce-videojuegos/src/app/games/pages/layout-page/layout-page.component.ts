@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-layout-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './layout-page.component.html',
   styles: ``
 })
@@ -22,9 +22,6 @@ export class LayoutPageComponent {
   }
 
   login() {
-    // Redirigir al usuario a la página de login
     console.log('Redirigiendo a la página de login...');
-    // Aquí puedes usar el Router de Angular para redirigir, por ejemplo:
-    // this.router.navigate(['/login']);
   }
 }

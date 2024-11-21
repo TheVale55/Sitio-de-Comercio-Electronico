@@ -1,13 +1,13 @@
 export interface Game {
-    id: string;
-    name: string,
-    description: string,
-    price: number,
-    category: string[],
-    platform: string[],
-    esrbRating: string,
-    shortScreenshots: string[],
-    backgroundImage: string,
-    brand: string,
-    discount: number,
+    _id: string;
+    Game_Name: string,
+    Game_Description: string,
+    Game_Price: number,
+    Game_Category: string[],
+    Game_Platform: string[],
+    Game_ESRB_Rating: string,
+    Game_Short_Screenshots: string[],
+    Game_Background_Image: string,
+    Brand: string,
+    Discount: number,
 }

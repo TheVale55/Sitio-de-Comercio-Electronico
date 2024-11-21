@@ -1,0 +1,10 @@
+<h1 class="text-3xl font-bold mb-6">Lista de Juegos</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  <p *ngIf="games.length === 0">No hay juegos disponibles.</p>
+  <app-game-card
+    *ngFor="let game of games"
+    [game]="game"
+  ></app-game-card>
+</div>
+  

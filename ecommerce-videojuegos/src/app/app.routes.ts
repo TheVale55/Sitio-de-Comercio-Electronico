@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Error404PageComponent } from './shared/pages/error404-page/error404-page.component';
 import { LayoutPageComponent } from './games/pages/layout-page/layout-page.component';
+import { GameListComponent } from './games/pages/game-list/game-list.component';
 export const routes: Routes = [
     {
         path: 'auth',
@@ -12,7 +13,8 @@ export const routes: Routes = [
         path: 'games',
         component: LayoutPageComponent,
         children: [
-    
+            { path: 'list', component: GameListComponent },
+            { path: '**', redirectTo: 'list' }
         ]
     },
     {
