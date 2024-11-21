@@ -35,16 +35,6 @@ const gameSchema = new Schema({
   Brand: {
     type: String,
   },
-  Technical_Specifications: {
-    Requirements_en: {
-      Minimum: {
-        type: String,
-      },
-      Recommended: {
-        type: String,
-      },
-    },
-  },
   Discount: {
     type: Number,
   }
