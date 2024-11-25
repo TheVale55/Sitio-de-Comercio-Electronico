@@ -1,4 +1,4 @@
-<div class="max-w-xs bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow" (click)="juegoClickeado(game._id)">
+<div class="max-w-xs bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
     <img
       class="rounded-t-lg object-cover w-full h-48"
       [src]="game.Game_Background_Image"
@@ -10,7 +10,8 @@
       <p class="text-lg font-semibold text-green-600 mt-2">${{ game.Game_Price }}</p>
       <button
         class="w-full mt-4 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition" 
-        [routerLink]="['/game', game._id]"
+        (click)=" juegoClickeado(game._id)"
+        
       >
         Ver Detalles
       </button>

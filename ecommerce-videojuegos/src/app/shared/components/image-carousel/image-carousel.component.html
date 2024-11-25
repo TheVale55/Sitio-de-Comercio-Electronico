@@ -1,0 +1,14 @@
+<div class="relative w-full max-w-2xl mx-auto">
+    <div class="overflow-hidden rounded-lg">
+      <div class="flex transition-transform duration-500 ease-in-out" [ngStyle]="{'transform': 'translateX(' + -currentIndex * 100 + '%)'}">
+        @for (image of images; track $index){
+            <div class="w-full flex-shrink-0">
+                <img src="{{image}}" alt="{{image}}{{$index}}" class="w-full">
+              </div>
+        }
+      </div>
+    </div>
+    <button (click)="prevImage()" class="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 bg-black text-white rounded-full">&lt;</button>
+    <button (click)="nextImage()" class="absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 bg-black text-white rounded-full">&gt;</button>
+  </div>
+  

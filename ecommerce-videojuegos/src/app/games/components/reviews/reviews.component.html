@@ -1,0 +1,23 @@
+
+  
+  <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="flex items-center justify-between p-4">
+        <div id="name" class="mr-5">
+          <p class="font-semibold text-lg text-gray-800">{{username}}</p>
+        </div>
+        <div id="rating" class="flex items-center">
+          <span *ngFor="let i of [0, 1, 2, 3, 4]" class="relative">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                 [ngClass]="i < rating ? 'text-yellow-500' : 'text-gray-300'">
+              <path d="M10 15.27l4.18 2.18-1.64-5.14L18 7.81h-5.22L10 2 7.22 7.81H2l4.46 4.5-1.64 5.14L10 15.27z"></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+    <div class="px-4 py-2 text-gray-700">
+      <p class="text-sm">
+        {{review}}
+      </p>
+    </div>
+  </div>
+  

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Game } from '../../interfaces/games.interface';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-game-card',
@@ -14,6 +14,9 @@ export class GameCardComponent {
   @Input()
   public game!: Game;
 
+  constructor(private router: Router) {}
+
+
   ngOnInit(): void {
     if (!this.game) {
       throw Error('Game property is required');
@@ -22,6 +25,8 @@ export class GameCardComponent {
 
   juegoClickeado(id: string): void {
     console.log(id);
+    this.router.navigate(['/games', id]);
+    window.scrollTo(0, 0);
   }
 
 }

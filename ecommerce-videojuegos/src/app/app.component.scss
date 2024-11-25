@@ -1,0 +1,29 @@
+.text-blue {
+    color: #0C056D;
+}
+.text-white{
+    color: #ffffff;
+}
+.text-green{
+   color:#298e2d; 
+}
+.bg-cream {
+    background-color: #F5F9E9;
+    //background-image: linear-gradient(to right, #05031e, #261ca8); 
+}
+.bg-blue{
+    background-color: #0C056D;
+}
+.bg-green{
+    background-color: #298e2d;
+}  
+.bg-cream-gradient{
+    background: linear-gradient(45deg,#CED1C4, #F5F9E9, #CED1C4);
+}
+.bg-blue-gradient{
+    background: linear-gradient(45deg,#0C056D, #180cbe);
+}
+.custom-divider {
+    border-top: 2px solid #c6c9bc;  /* Example custom color: #FF5733 (Orange) */
+  }
+  
