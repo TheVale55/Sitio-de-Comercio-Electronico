@@ -8,7 +8,7 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './game-card.component.html',
-  styles: ``
+  styleUrl: '../../../app.component.scss',
 })
 export class GameCardComponent {
   @Input()

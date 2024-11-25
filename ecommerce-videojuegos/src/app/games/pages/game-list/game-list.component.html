@@ -1,10 +1,106 @@
-<h1 class="text-3xl font-bold mb-6">Lista de Juegos</h1>
+<div class="mb-20">
+  <div id="title" class="flex justify-center">
+    <h1 class="text-5xl font-bold m-5 text-blue">OUR GAMES</h1> 
+  </div>
 
+  <!--Filtering Dropdown-->
+  <div class="relative">
+    <div class="absolute top-0 right-0">
+      <!-- Dropdown Button -->
+      <button class="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-blue rounded-md shadow-sm hover:bg-blue-600"
+        (click)="toggleDropdown()">
+        Filters
+        <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </button>
+    
+        <!-- Dropdown Panel -->
+      <div class="absolute right-0 mt-2 bg-white rounded-md shadow-lg w-80" *ngIf="dropdownOpen">
+        <div class="p-4 space-y-4">
+          <h2 class="text-lg font-bold mb-2">Advanced Filters</h2>
+          <!-- Price Filter -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Price ($)</label>
+            
+            <div class="flex items-center">
+              <span class="mr-2">Min:</span>
+              <input class="w-full border rounded px-3 py-2" type="number" placeholder="Min"
+                [(ngModel)]="filters.minPrice"/>
+            </div>
+            
+            <div class="flex items-center mt-2">
+              <span class="mr-2">Max:</span>
+              <input class="w-full border rounded px-3 py-2" type="number" placeholder="Max"
+                [(ngModel)]="filters.maxPrice"/>
+            </div>
+          </div>
+          
+          <!-- Category Filter -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Category</label>
+            <select class="w-full border rounded px-3 py-2 max-h-32 overflow-y-auto" [(ngModel)]="filters.category">
+              <option value="">All Categories</option>
+              <option *ngFor="let category of game_categories" [value]="category">
+                {{ category }}
+              </option>
+            </select>
+          </div>
+    
+          <!-- Brand Filter -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Brand</label>
+            <select class="w-full border rounded px-3 py-2 max-h-32 overflow-y-auto" [(ngModel)]="filters.brand">
+              <option value="">All Brands</option>
+              <option *ngFor="let brand of game_brands" [value]="brand">{{ brand }}</option>
+            </select>
+          </div>
+    
+          <!-- Rating Filter -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Rating (Stars)</label>
+            <select [(ngModel)]="filters.popularity" class="w-full border rounded px-3 py-2">
+              <option value="">All</option>
+              <option *ngFor="let stars of [1, 2, 3, 4, 5]" [value]="stars">
+                {{ stars }} Stars
+              </option>
+            </select>
+          </div>
+          <!-- Apply Filter Button -->
+          <button class="w-full mt-4 bg-blue text-white py-2 px-4 rounded hover:bg-blue-600" (click)="applyFilters()">
+            Apply Filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Search Bar -->
+    <div class="max-w-md mx-auto mt-4">
+      <!-- Search Bar -->
+      <input type="text" class="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Search games..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearchChange()"
+      />
+    
+      <!-- Suggestions -->
+      <ul *ngIf="filteredGames.length > 0" class="mt-2 bg-white border rounded-lg shadow-sm">
+        <li *ngFor="let game of filteredGames" class="px-4 py-2 cursor-pointer hover:bg-gray-100"
+          (click)="selectGame(game.Game_Name)">
+          {{ game.Game_Name }}
+        </li>
+      </ul>
+    
+      <!-- No results message -->
+      <p *ngIf="searchQuery && games.length === 0" class="mt-2 text-sm text-gray-500">
+        No games found.
+      </p>
+    </div>
+</div>
+
+<!--Game list-->
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-  <p *ngIf="games.length === 0">No hay juegos disponibles.</p>
-  <app-game-card
-    *ngFor="let game of games"
-    [game]="game"
-  ></app-game-card>
+  <p *ngIf="games.length === 0">No available games meet the criteria.</p>
+  <app-game-card *ngFor="let game of games" [game]="game"></app-game-card>
 </div>
   
