@@ -14,7 +14,7 @@ export class GamesService {
 
   getGames(esbrRating: string, category: string, platform: string, precioMin: string, precioMax: string, brand: string): Observable<Game[]>{
     console.log(esbrRating, category, platform, brand, precioMax, precioMin)
-    return this.http.get<Game[]>(`${this.baseUrl}/api/games?esbrRating=${esbrRating}&category=${category}&platform=${platform}&precioMin=${precioMin}&precioMax=${precioMax}&brand=${brand}`);
+    return this.http.get<Game[]>(`${this.baseUrl}/api/games?esrbRating=${esbrRating}&category=${category}&platform=${platform}&precioMin=${precioMin}&precioMax=${precioMax}&brand=${brand}`);
   }
 
   getSaleGames(): Observable<Game[]> {

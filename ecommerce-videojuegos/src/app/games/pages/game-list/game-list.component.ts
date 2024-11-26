@@ -83,6 +83,7 @@ export class GameListComponent {
   applyFilters() {
     const minPrice = this.filters.minPrice > 0 ? this.filters.minPrice.toString() : "";
     const maxPrice = this.filters.maxPrice > 0 ? this.filters.maxPrice.toString() : "";
+    //console.log(this.filters.esbrRating, this.filters.category, this.filters.platform, minPrice, maxPrice, this.filters.brand)
     this.gameService.getGames(this.filters.esbrRating, this.filters.category, this.filters.platform, minPrice, maxPrice, this.filters.brand)
     .subscribe(
       games => {this.games = games; console.log(games)}
