@@ -7,11 +7,10 @@
     <div class="p-4">
       <h3 class="text-lg font-bold text-gray-800">{{ game.Game_Name }}</h3>
       <p class="text-gray-600 text-sm truncate">{{ game.Brand }}</p>
-      <p class="text-lg font-semibold text-green-600 mt-2">${{ game.Game_Price }}</p>
+      <p class="text-lg font-semibold text-green-600 mt-2">₡{{ game.Game_Price * 520 | costarricanPrice:500}}</p>
       <button
         class="w-full mt-4 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition" 
         (click)=" juegoClickeado(game._id)"
-        
       >
         Ver Detalles
       </button>

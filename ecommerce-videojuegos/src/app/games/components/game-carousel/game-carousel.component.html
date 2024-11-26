@@ -1,0 +1,36 @@
+<div class="relative w-full">
+    <!-- Contenedor del carrusel -->
+    <div class="overflow-hidden rounded-lg">
+      <!-- Tarjetas del carrusel -->
+      <div
+        class="relative flex gap-4 transition-transform duration-500 ease-in-out"
+        [ngStyle]="{ 'transform': 'translateX(' + -currentIndex * 100 + '%)' }"
+      >
+        <div
+            *ngFor="let game of games"
+            class="w-1/4 flex-shrink-0"
+            style="flex: 0 0 calc(25% - 1rem);"
+        >
+            <app-game-card [game]="game" class="w-full max-w-sm"></app-game-card>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Botón izquierdo -->
+    <button
+      (click)="prevSlide()"
+      class="absolute top-1/2 left-2 transform -translate-y-1/2 px-4 py-2 bg-black text-white rounded-full"
+    >
+      &lt;
+    </button>
+  
+    <!-- Botón derecho -->
+    <button
+      (click)="nextSlide()"
+      class="absolute top-1/2 right-2 transform -translate-y-1/2 px-4 py-2 bg-black text-white rounded-full"
+    >
+      &gt;
+    </button>
+  </div>
+  
+  

@@ -1,0 +1,114 @@
+<div class="pt-5 pb-8">
+    <div class="text-blue text-center">
+        <div class="flex items-center justify-center space-x-4">
+            <img src="/assets/logo.png" alt="Hardtonic Logo" class="h-64 w-auto">
+          </div>
+        <h3 class="text-3xl font-semibold mb-6 text-gray-600">Los mejores juegos a los mejores precios</h3>
+    </div>
+      
+    <div class="text-blue text-center items-center justify-center my-10">
+        <h1 class="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-blue-400 text-white py-2 px-4 inline-block rounded-lg shadow-md">
+          Ofertas del día
+        </h1>
+        <div class="relative z-10 text-white text-center py-5 px-4">
+            <p
+              *ngIf="saleGames.length === 0"
+              class="text-purple-900 text-lg"
+            >
+              No hay ofertas disponibles.
+            </p>
+            <div class="max-w-7xl mx-auto" *ngIf="saleGames.length !== 0">
+              <app-game-carousel [games]="saleGames"></app-game-carousel>
+            </div>
+          </div>
+      </div>
+      
+      <div class="relative bg-[url('/assets/playstation.jpg')] h-full w-full bg-cover bg-center bg-no-repeat">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
+        <div class="relative z-10 text-white text-center py-16 px-4">
+          <h1 class="text-4xl font-extrabold mb-10 tracking-wide">
+            Descubre los mejores juegos de PlayStation
+          </h1>
+          <p
+            *ngIf="playGames.length === 0"
+            class="text-gray-300 text-lg"
+          >
+            No hay juegos disponibles.
+          </p>
+          <div class="max-w-7xl mx-auto">
+            <app-game-carousel [games]="playGames"></app-game-carousel>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative bg-[url('/assets/xbox.jpeg')] h-full w-full bg-cover bg-center bg-no-repeat">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
+        <div class="relative z-10 text-white text-center py-16 px-4">
+          <h1 class="text-4xl font-extrabold mb-10 tracking-wide">
+            Descubre los mejores juegos de Xbox
+          </h1>
+          <p
+            *ngIf="xboxGames.length === 0"
+            class="text-gray-300 text-lg"
+          >
+            No hay juegos disponibles.
+          </p>
+          <div class="max-w-7xl mx-auto">
+            <app-game-carousel [games]="xboxGames"></app-game-carousel>
+          </div>
+        </div>
+      </div>
+    
+      <div class="relative bg-[url('/assets/PC.jpg')] h-full w-full bg-cover bg-center bg-no-repeat">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
+        <div class="relative z-10 text-white text-center py-16 px-4">
+          <h1 class="text-4xl font-extrabold mb-10 tracking-wide">
+            Descubre los mejores juegos de PC
+          </h1>
+          <p
+            *ngIf="pcGames.length === 0"
+            class="text-gray-300 text-lg"
+          >
+            No hay juegos disponibles.
+          </p>
+          <div class="max-w-7xl mx-auto">
+            <app-game-carousel [games]="pcGames"></app-game-carousel>
+          </div>
+        </div>
+      </div>
+    
+      <div class="relative bg-[url('/assets/nintendo.jpg')] h-full w-full bg-cover bg-center bg-no-repeat">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70"></div>
+      
+        <!-- Contenido -->
+        <div class="relative z-10 text-white text-center py-16 px-4">
+          <h1 class="text-4xl font-extrabold mb-10 tracking-wide">
+            Descubre los mejores juegos de Nintendo
+          </h1>
+      
+          <!-- Mensaje si no hay juegos -->
+          <p
+            *ngIf="nintendoGames.length === 0"
+            class="text-gray-300 text-lg"
+          >
+            No hay juegos disponibles.
+          </p>
+      
+          <!-- Carrusel de juegos -->
+          <div class="max-w-7xl mx-auto">
+            <app-game-carousel [games]="nintendoGames"></app-game-carousel>
+          </div>
+        </div>
+      </div>
+      
+    <div class="text-center items-center justify-center my-10">
+        <h1 class="text-4xl font-bold mb-6">Explora todo nuestro catálogo</h1>
+        <button 
+          routerLink="/games" 
+          class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105"
+        >
+          Explorar
+        </button>
+      </div>
+      
+</div>

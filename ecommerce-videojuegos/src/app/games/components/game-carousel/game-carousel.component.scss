@@ -1,0 +1,8 @@
+button {
+    @apply absolute top-1/2 transform -translate-y-1/2 px-4 py-2 bg-black text-white rounded-full;
+  }
+  
+  button:hover {
+    @apply bg-gray-700;
+  }
+  

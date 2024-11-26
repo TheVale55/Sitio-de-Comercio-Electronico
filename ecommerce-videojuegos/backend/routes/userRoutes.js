@@ -10,11 +10,11 @@ router.put('/:id', userController.updateUser);     // Actualizar un usuario por 
 router.delete('/:id', userController.deleteUser);  // Desactivar un usuario por ID
 
 // Rutas para el carrito de compras
-router.post('/:userId/cart/:gameId', userController.addToCart);         // Agregar un juego al carrito
+router.put('/:userId/cart/:gameId', userController.addToCart);         // Agregar un juego al carrito
 router.delete('/:userId/cart/:gameId', userController.removeFromCart);  // Eliminar un juego del carrito
 
 // Rutas para la wishlist
-router.post('/:userId/wishlist/:gameId', userController.addToWishlist);         // Agregar un juego a la lista de deseos
+router.put('/:userId/wishlist/:gameId', userController.addToWishlist);         // Agregar un juego a la lista de deseos
 router.delete('/:userId/wishlist/:gameId', userController.removeFromWishlist);  // Eliminar un juego de la lista de deseos
 
 module.exports = router;

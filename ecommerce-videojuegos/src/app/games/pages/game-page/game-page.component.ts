@@ -1,3 +1,4 @@
+import { UserService } from './../../../auth/services/user.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ImageCarouselComponent } from "../../../shared/components/image-carousel/image-carousel.component";
@@ -7,12 +8,17 @@ import { GamesService } from '../../services/games.service';
 import { HttpClient } from '@angular/common/http';
 import { ReviewsComponent } from "../../components/reviews/reviews.component";
 import { GameCardComponent } from "../../components/game-card/game-card.component";
-
-
+import  { CostarricanPricePipe } from '../../pipes/costarrican-price.pipe';
 @Component({
   selector: 'app-game-page',
   standalone: true,
-  imports: [CommonModule, ImageCarouselComponent, ReviewsComponent, GameCardComponent],
+  imports: [
+    CommonModule, 
+    ImageCarouselComponent, 
+    ReviewsComponent, 
+    GameCardComponent, 
+    CostarricanPricePipe
+  ],
   templateUrl: './game-page.component.html',
   styleUrl: '../../../app.component.scss',
 })
@@ -43,7 +49,8 @@ export class GamePageComponent {
     private activeRoute: ActivatedRoute,
     private route: Router,
     private http: HttpClient,
-    private gameService: GamesService
+    private gameService: GamesService,
+    private userService: UserService,
   ){}
 
   ngOnInit(): void {
@@ -63,7 +70,24 @@ export class GamePageComponent {
     })
   }
 
-
+  addToCart(game: Game) {
+    const userID = localStorage.getItem('user')
+    if (!userID) {
+      this.route.navigate(['/login'])
+      return;
+    }else{
+      this.userService.addToCart(userID, game._id)
+    }
+  }
+  addToWishlist(game: Game) {
+    const userID = localStorage.getItem('user')
+    if (!userID) {
+      this.route.navigate(['/login'])
+      return;
+    }else{
+      this.userService.addToWishlist(userID, game._id)
+    }
+  }
 
 }
 

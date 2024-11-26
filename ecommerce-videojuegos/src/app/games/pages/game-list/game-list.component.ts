@@ -17,7 +17,7 @@ export class GameListComponent {
   constructor(private gameService: GamesService) { }
 
   ngOnInit(): void {
-    this.gameService.getGames().subscribe(
+    this.gameService.getGames("","","").subscribe(
       games => this.games = games
     );
   }

@@ -16,4 +16,16 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/api/users`)
   }
+  addToCart(userID: string, gameID: string): Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/api/users/${userID}/cart/${gameID}`, {})
+  }
+  removeFromCart(userID: string, gameID: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}/api/users/${userID}/cart/${gameID}`)
+  }
+  addToWishlist(userID: string, gameID: string): Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/api/users/${userID}/wishlist/${gameID}`, {})
+  }
+  removeFromWishlist(userID: string, gameID: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}/api/users/${userID}/wishlist/${gameID}`)
+  }
 }

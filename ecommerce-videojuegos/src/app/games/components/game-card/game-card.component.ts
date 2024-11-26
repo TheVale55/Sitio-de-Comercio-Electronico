@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Game } from '../../interfaces/games.interface';
 import { Router, RouterModule } from '@angular/router';
-
+import { CostarricanPricePipe } from '../../pipes/costarrican-price.pipe';
 @Component({
   selector: 'app-game-card',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CostarricanPricePipe],
   templateUrl: './game-card.component.html',
   styles: ``
 })
@@ -24,7 +24,6 @@ export class GameCardComponent {
   }
 
   juegoClickeado(id: string): void {
-    console.log(id);
     this.router.navigate(['/games', id]);
     window.scrollTo(0, 0);
   }
