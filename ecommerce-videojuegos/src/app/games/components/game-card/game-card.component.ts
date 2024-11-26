@@ -8,7 +8,7 @@ import { CostarricanPricePipe } from '../../pipes/costarrican-price.pipe';
   standalone: true,
   imports: [CommonModule, RouterModule, CostarricanPricePipe],
   templateUrl: './game-card.component.html',
-  styles: ``
+  styleUrl: '../../../app.component.scss',
 })
 export class GameCardComponent {
   @Input()
