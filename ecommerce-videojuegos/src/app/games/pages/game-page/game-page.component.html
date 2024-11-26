@@ -14,14 +14,14 @@
     
     <div class="flex mx-5 xl:mx-12">
         <div>
-            <ul class="grid w-60 flex flex-col">
+            <ul class="grid w-60 flex-col">
                 <li class="inline-flex items-center  py-3 text-sm font-medium text-gray-900 "> 
                     <h1 class="text-blue text-sm xl:text-xl font-bold xl:min-w-[100px]"> RATING </h1>
-                    <h1 class="text-blue bg-cream-gradient xl:text-base font-semibold py-1 px-4 rounded mx-1 my-1 text-xs xl:text-sm whitespace-nowrap">{{game.Game_ESRB_Rating}}  </h1>
+                    <h1 class="text-blue bg-cream-gradient font-semibold py-1 px-4 rounded mx-1 my-1 text-xs xl:text-sm whitespace-nowrap">{{game.Game_ESRB_Rating}}  </h1>
                 </li>
                 <li class="inline-flex items-center  py-3 text-sm font-medium text-gray-900 "> 
                     <h1 class="text-blue text-sm xl:text-xl font-bold xl:min-w-[100px]"> BRAND </h1>
-                    <h1 class="text-blue bg-cream-gradient  xl:text-base font-semibold py-1 px-4 rounded mx-1 my-1 text-xs xl:text-sm whitespace-nowrap"> {{game.Brand}}  </h1>
+                    <h1 class="text-blue bg-cream-gradient font-semibold py-1 px-4 rounded mx-1 my-1 text-xs xl:text-sm whitespace-nowrap"> {{game.Brand}}  </h1>
                 </li>
 
 
@@ -30,7 +30,7 @@
                     <ul class="flex flex-row mr-3">
                     @for (image of game.Game_Category; track $index){
                         <li class="inline-flex items-center">
-                            <h1 class="text-blue bg-cream-gradient  xl:text-base font-semibold py-1 px-4 rounded mx-1 my-1 text-xs xl:text-sm whitespace-nowrap"> {{game.Game_Category[$index]}} </h1>
+                            <h1 class="text-blue bg-cream-gradient font-semibold py-1 px-4 rounded mx-1 my-1 text-xs xl:text-sm whitespace-nowrap"> {{game.Game_Category[$index]}} </h1>
                         </li>
                     }
                     </ul>
@@ -40,7 +40,7 @@
                     <ul class="flex flex-row mr-3">
                         @for (image of game.Game_Platform; track $index) {
                             <li class="inline-flex items-center">
-                                <h1 class="text-blue bg-cream-gradient  xl:text-base font-semibold py-1 px-4 rounded mx-1 my-1 text-xs xl:text-sm whitespace-nowrap">
+                                <h1 class="text-blue bg-cream-gradient font-semibold py-1 px-4 rounded mx-1 my-1 text-xs xl:text-sm whitespace-nowrap">
                                     {{ game.Game_Platform[$index] }}
                                 </h1>
                             </li>
@@ -98,7 +98,7 @@
     </div>
 
     <div class="text-blue font-bold text-3xl"> CUSTOMER REVIEWS
-        <div class="text-white  p-5 font-bold rounded-md overflow-y-auto max-h-96 p-2 " > 
+        <div class="text-white p-5 font-bold rounded-md overflow-y-auto max-h-96  " > 
             @for(review of userReviews; track $index){
                 <app-reviews [username]="review[0]" [rating]="randomRatings[$index]" [review]="review[1]" 
                 class="mx-5"

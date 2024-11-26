@@ -3,7 +3,7 @@ const Game = require('../models/game');
 // Obtener todos los juegos con filtros avanzados y búsqueda parcial
 const getAllGames = async (req, res) => {
   try {
-    const { platform, category, esrbRating } = req.query;
+    const { platform, category, esrbRating, precioMin, precioMax, brand} = req.query;
     // Crear un objeto de filtro dinámico
     const filters = {};
     // Búsqueda parcial por plataforma
@@ -17,6 +17,15 @@ const getAllGames = async (req, res) => {
     // Filtro por ESRB Rating
     if (esrbRating) {
       filters.Game_ESRB_Rating = { $regex: esrbRating, $options: 'i'}; // Filtra por coincidencia exacta
+    }
+    if (precioMin) {
+      filters.Game_Price = { $gte: parseFloat(precioMin)};
+    }
+    if (precioMax) {
+      filters.Game_Price = { $lte: parseFloat(precioMax)};
+    }
+    if (brand) {
+      filters.Game_Brand = { $regex: brand, $options: 'i' }; // Búsqueda insensible a mayúsculas/minúsculas
     }
     // Consultar la base de datos aplicando los filtros
     const games = await Game.find(filters);

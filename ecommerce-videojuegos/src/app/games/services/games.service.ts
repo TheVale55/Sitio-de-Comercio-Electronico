@@ -12,8 +12,8 @@ export class GamesService {
 
   constructor(private http: HttpClient) { }
 
-  getGames(esbrRating: string, category: string, platform: string): Observable<Game[]>{
-    return this.http.get<Game[]>(`${this.baseUrl}/api/games?esbrRating=${esbrRating}&category=${category}&platform=${platform}`);
+  getGames(esbrRating: string, category: string, platform: string, precioMin: string, precioMax: string, brand: string): Observable<Game[]>{
+    return this.http.get<Game[]>(`${this.baseUrl}/api/games?esbrRating=${esbrRating}&category=${category}&platform=${platform}&precioMin=${precioMin}&precioMax=${precioMax}&brand=${brand}`);
   }
 
   getSaleGames(): Observable<Game[]> {
