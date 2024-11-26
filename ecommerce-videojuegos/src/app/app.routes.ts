@@ -3,13 +3,12 @@ import { Error404PageComponent } from './shared/pages/error404-page/error404-pag
 import { LayoutPageComponent } from './games/pages/layout-page/layout-page.component';
 import { GameListComponent } from './games/pages/game-list/game-list.component';
 import { GamePageComponent } from './games/pages/game-page/game-page.component';
+import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { LandPageComponent } from './shared/pages/land-page/land-page.component';
 export const routes: Routes = [
     {
         path: 'auth',
-        children:[
-
-        ]
+        children: []
     },
     {
         path: 'games',
@@ -19,6 +18,10 @@ export const routes: Routes = [
             { path: ':id', component: GamePageComponent  },
             { path: '**', redirectTo: 'list' }
         ]
+    },
+    {
+        path: 'login', // Mover esta ruta antes de los comodines
+        component: LoginPageComponent
     },
     {
         path: '404',
@@ -33,3 +36,4 @@ export const routes: Routes = [
         redirectTo: '404'
     }
 ];
+

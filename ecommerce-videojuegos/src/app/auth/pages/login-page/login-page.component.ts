@@ -5,8 +5,12 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './login-page.component.html',
-  styles: ``
+  styles: []
 })
 export class LoginPageComponent {
+  passwordVisible: boolean = false;
 
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
 }
