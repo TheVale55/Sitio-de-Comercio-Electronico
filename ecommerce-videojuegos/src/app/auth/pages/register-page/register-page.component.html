@@ -1,1 +1,69 @@
-<p>register-page works!</p>
+<div class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="bg-white rounded-lg shadow-md p-6 w-96">
+      <!-- Logo centrado -->
+      <div class="flex justify-center mb-6">
+        <img src="assets/logo.png" alt="Logo" class="w-28 h-auto" />
+      </div>
+      <!-- Título -->
+      <h3 class="text-center text-xl font-bold text-indigo-800 mb-4">Register</h3>
+      <!-- Formulario -->
+      <form>
+        <!-- Campo Email -->
+        <div class="flex items-center border border-gray-300 rounded-lg mb-4 px-3 py-2">
+          <i class="fas fa-envelope text-gray-500"></i>
+          <input
+            type="email"
+            placeholder="Email"
+            class="flex-1 pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
+          />
+        </div>
+        <!-- Campo Username -->
+        <div class="flex items-center border border-gray-300 rounded-lg mb-4 px-3 py-2">
+          <i class="fas fa-user text-gray-500"></i>
+          <input
+            type="text"
+            placeholder="Username"
+            class="flex-1 pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
+          />
+        </div>
+        <!-- Campo Password -->
+        <div class="flex items-center border border-gray-300 rounded-lg mb-4 px-3 py-2">
+          <i class="fas fa-lock text-gray-500"></i>
+          <input
+            [type]="passwordVisible ? 'text' : 'password'"
+            placeholder="Password"
+            class="flex-1 pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
+          />
+          <i
+            class="fas cursor-pointer text-gray-500"
+            [class.fa-eye]="!passwordVisible"
+            [class.fa-eye-slash]="passwordVisible"
+            (click)="togglePasswordVisibility()"
+          ></i>
+        </div>
+        <!-- Confirmar Password -->
+        <div class="flex items-center border border-gray-300 rounded-lg mb-4 px-3 py-2">
+          <i class="fas fa-lock text-gray-500"></i>
+          <input
+            [type]="confirmPasswordVisible ? 'text' : 'password'"
+            placeholder="Confirm Password"
+            class="flex-1 pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
+          />
+          <i
+            class="fas cursor-pointer text-gray-500"
+            [class.fa-eye]="!confirmPasswordVisible"
+            [class.fa-eye-slash]="confirmPasswordVisible"
+            (click)="toggleConfirmPasswordVisibility()"
+          ></i>
+        </div>
+        <!-- Botón de Registro -->
+        <button
+          type="submit"
+          class="w-full bg-indigo-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-300"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+  </div>
+  

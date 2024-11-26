@@ -4,7 +4,10 @@ import { LayoutPageComponent } from './games/pages/layout-page/layout-page.compo
 import { GameListComponent } from './games/pages/game-list/game-list.component';
 import { GamePageComponent } from './games/pages/game-page/game-page.component';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
+import { RegisterPageComponent } from './auth/pages/register-page/register-page.component';
 import { LandPageComponent } from './shared/pages/land-page/land-page.component';
+
+
 export const routes: Routes = [
     {
         path: 'auth',
@@ -22,6 +25,10 @@ export const routes: Routes = [
     {
         path: 'login', // Mover esta ruta antes de los comodines
         component: LoginPageComponent
+    },
+    {
+        path: 'register', // Mover esta ruta antes de los comodines
+        component: RegisterPageComponent
     },
     {
         path: '404',

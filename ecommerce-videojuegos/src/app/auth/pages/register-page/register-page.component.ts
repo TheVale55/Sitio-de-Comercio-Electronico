@@ -8,5 +8,15 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class RegisterPageComponent {
+  passwordVisible: boolean = false;
+  confirmPasswordVisible: boolean = false;
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.confirmPasswordVisible = !this.confirmPasswordVisible;
+  }
 
 }

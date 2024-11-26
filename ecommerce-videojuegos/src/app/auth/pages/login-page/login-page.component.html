@@ -21,12 +21,18 @@
       <div class="flex items-center border rounded-lg mb-6 px-3 py-2">
         <i class="fas fa-lock text-gray-500"></i>
         <input
-          type="password"
+          [type]="passwordVisible ? 'text' : 'password'"
           placeholder="Password"
           class="w-full pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
         />
-        <i class="fas fa-eye text-gray-500 cursor-pointer"></i>
+        <i
+          class="fas cursor-pointer text-gray-500"
+          [class.fa-eye]="!passwordVisible"
+          [class.fa-eye-slash]="passwordVisible"
+          (click)="togglePasswordVisibility()"
+        ></i>
       </div>
+
       <!-- Botón de Login -->
       <button
         type="submit"
@@ -36,10 +42,11 @@
       </button>
       <!-- Links -->
       <div class="text-center mt-4 text-sm">
-        <a href="#" class="text-gray-600 hover:text-indigo-800 transition duration-300">Forgot password?</a>
-        <br />
-        <a href="#" class="text-gray-600 hover:text-indigo-800 transition duration-300">Register now</a>
+        <a href="" (click)="register($event)" class="text-gray-600 hover:text-indigo-800 transition duration-300">
+          Register now
+        </a>
       </div>
+      
     </form>
   </div>
 </div>

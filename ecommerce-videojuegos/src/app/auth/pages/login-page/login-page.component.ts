@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -8,9 +9,17 @@ import { Component } from '@angular/core';
   styles: []
 })
 export class LoginPageComponent {
+  constructor(private router: Router) {}
   passwordVisible: boolean = false;
 
-  togglePasswordVisibility() {
+  togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
+
+  register(event: Event): void {
+    event.preventDefault(); // Evita el comportamiento por defecto
+    console.log('Redirigiendo a la página de registro...');
+    this.router.navigate(['/register']); // Redirige correctamente
+  }
+  
 }
