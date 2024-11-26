@@ -25,7 +25,7 @@ const getAllGames = async (req, res) => {
       filters.Game_Price = { $lte: parseFloat(precioMax)};
     }
     if (brand) {
-      filters.Game_Brand = { $regex: brand, $options: 'i' }; // Búsqueda insensible a mayúsculas/minúsculas
+      filters.Brand = { $regex: brand, $options: 'i' }; // Búsqueda insensible a mayúsculas/minúsculas
     }
     // Consultar la base de datos aplicando los filtros
     const games = await Game.find(filters);
