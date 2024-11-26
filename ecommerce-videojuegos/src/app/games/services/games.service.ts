@@ -13,6 +13,7 @@ export class GamesService {
   constructor(private http: HttpClient) { }
 
   getGames(esbrRating: string, category: string, platform: string, precioMin: string, precioMax: string, brand: string): Observable<Game[]>{
+    console.log(esbrRating, category, platform, brand, precioMax, precioMin)
     return this.http.get<Game[]>(`${this.baseUrl}/api/games?esbrRating=${esbrRating}&category=${category}&platform=${platform}&precioMin=${precioMin}&precioMax=${precioMax}&brand=${brand}`);
   }
 
@@ -31,39 +32,6 @@ export class GamesService {
           .filter(game => game.Game_Category.includes(category))  // Filter by category
           .sort(() => Math.random() - 0.5)  // Shuffle the array randomly
           .slice(0, 4)  // Take the first 4 games from the shuffled list
-      )
-    );
-  }
-
-   // TODO add category filtering
-  getFilteredGames(
-    minPrice: number,
-    maxPrice: number,
-    category: string,
-    brand: string
-  ): Observable<Game[]> {
-    return this.http.get<Game[]>(`${this.baseUrl}/api/games`).pipe(
-      map((games: Game[]) => {
-        return games.filter((game) => {
-          const matchesCategory =
-            category==="" || game.Game_Category.includes(category);
-          const matchesBrand =
-            brand==="" || game.Brand.toLowerCase() === brand.toLowerCase();
-          const matchesPrice =
-            (minPrice === 0 || game.Game_Price >= minPrice) &&
-            (maxPrice === 0 || game.Game_Price <= maxPrice);
-  
-          return matchesCategory && matchesBrand && matchesPrice;
-        });
-      })
-    );
-  }
-  
-  getGamesByName(name: string): Observable<Game[]> {
-    return this.http.get<Game[]>(`${this.baseUrl}/api/games`).pipe(
-      map(games => 
-        games
-          .filter(game => game.Game_Name.toUpperCase().includes(name.toUpperCase()))  
       )
     );
   }

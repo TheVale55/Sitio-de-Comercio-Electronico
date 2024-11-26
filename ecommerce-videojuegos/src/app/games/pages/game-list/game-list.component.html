@@ -16,12 +16,12 @@
       </button>
     
         <!-- Dropdown Panel -->
-      <div class="absolute right-0 mt-2 bg-white rounded-md shadow-lg w-80" *ngIf="dropdownOpen">
+      <div class="absolute right-0 mt-2 bg-white rounded-md shadow-lg w-80 overflow-y-auto max-h-96 " *ngIf="dropdownOpen">
         <div class="p-4 space-y-4">
           <h2 class="text-lg font-bold mb-2">Advanced Filters</h2>
           <!-- Price Filter -->
           <div>
-            <label class="block text-sm font-medium mb-1">Price ($)</label>
+            <label class="block text-sm font-medium mb-1">Price (₡)</label>
             
             <div class="flex items-center">
               <span class="mr-2">Min:</span>
@@ -46,6 +46,28 @@
               </option>
             </select>
           </div>
+
+          <!-- Platform Filter -->
+          <div>
+            <label class="block text-sm font-medium mb-1">Platform</label>
+            <select class="w-full border rounded px-3 py-2 max-h-32 overflow-y-auto" [(ngModel)]="filters.platform">
+              <option value="">All Platforms</option>
+              <option *ngFor="let platform of game_platforms" [value]="platform">
+                {{ platform }}
+              </option>
+            </select>
+          </div>
+
+          <!-- ESBR RATING Filter -->
+          <div>
+            <label class="block text-sm font-medium mb-1">ESBR Rating</label>
+            <select class="w-full border rounded px-3 py-2 max-h-32 overflow-y-auto" [(ngModel)]="filters.esbrRating">
+              <option value="">All Ratings</option>
+              <option *ngFor="let rating of game_ratings" [value]="rating">
+                {{ rating }}
+              </option>
+            </select>
+          </div>
     
           <!-- Brand Filter -->
           <div>
@@ -66,10 +88,12 @@
               </option>
             </select>
           </div>
+
           <!-- Apply Filter Button -->
           <button class="w-full mt-4 bg-blue text-white py-2 px-4 rounded hover:bg-blue-600" (click)="applyFilters()">
             Apply Filters
           </button>
+
         </div>
       </div>
     </div>
