@@ -1,79 +1,63 @@
 <div class="container max-w-full max-h-full">
-  <nav class=" bg-blue border-gray-200 dark:bg-gray-900">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="/assets/hartonic-logo.png" class="h-10" alt="Hardtonic Logo" />
-        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Hardtonic</span>
-      </a>
-  
-      <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
-        <!-- Si el usuario está logueado -->
-        <button
-          *ngIf="isLoggedIn"
-          type="button"
-          class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-          id="user-menu-button"
-          aria-expanded="false"
-          (click)="toggleDropdown()"
-        >
-          <span class="sr-only">Open user menu</span>
-          <img class="w-8 h-8 rounded-full" src="/assets/default_pp.png" alt="user photo" />
-        </button>
-  
-        <!-- Dropdown menu -->
-        <div
-          *ngIf="isDropdownOpen"
-          class="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-48 bg-white rounded-lg shadow-lg z-50 dark:bg-gray-800"
-        >
-          <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
-            <li>
-              <a
-                (click)="profile()"
-                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Profile
-              </a>
-            </li>
-            <li>
-              <a
-                (click)="cart()"
-                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Shopping Cart
-              </a>
-            </li>
-            <li>
-              <a
-                (click)="wishlist()"
-                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Wishlist
-              </a>
-            </li>
-            <li>
-              <button
-                class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                (click)="logout()"
-              >
-                Logout
-              </button>
-            </li>
-          </ul>
+  <!-- Navbar -->
+  <nav class="bg-[#0C056D] text-white">
+    <div class="container mx-auto flex items-center justify-between py-4 px-6">
+      <!-- Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="/assets/hartonic-logo.png" alt="Hardtonic Logo" class="h-10" />
+        <span class="text-2xl font-semibold"></span>
+      </div>
+
+      <!-- Barra de búsqueda -->
+      <div class="flex-1 mx-8">
+        <input
+          type="text"
+          placeholder="Search games..."
+          class="w-full px-4 py-2 rounded-lg text-gray-700"
+        />
+      </div>
+
+      <!-- Login/Usuario y Carrito -->
+      <div class="flex items-center space-x-6">
+        <!-- Botón de login o nombre de usuario -->
+        <div *ngIf="!isLoggedIn">
+          <button
+            class="bg-white text-blue-800 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition"
+            (click)="login()"
+          >
+            Login
+          </button>
         </div>
-  
-        <!-- Si el usuario NO está logueado -->
-        <button
-          *ngIf="!isLoggedIn"
-          class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-4 py-2 text-center"
-          (click)="login()"
-        >
-          Login
-        </button>
+        <div *ngIf="isLoggedIn" class="flex items-center space-x-3">
+          <span class="text-sm">Username</span>
+          <img
+            src="/assets/default_pp.png"
+            alt="User Avatar"
+            class="w-8 h-8 rounded-full"
+          />
+        </div>
+
+        <!-- Carrito de compras -->
+        <div class="relative">
+          <button
+            class="text-white hover:text-gray-200"
+            (click)="cart()"
+          >
+            <i class="fas fa-shopping-cart text-xl"></i>
+          </button>
+          <span
+            *ngIf="cartItems > 0"
+            class="absolute -top-2 -right-2 bg-red-500 text-xs text-white font-bold px-2 py-0.5 rounded-full"
+          >
+            {{ cartItems }}
+          </span>
+        </div>
       </div>
     </div>
   </nav>
+
+  <!-- Contenedor principal -->
   <div class="container mx-auto p-4" (click)="closeDropdown()">
     <router-outlet></router-outlet>
   </div>
 </div>
-  
