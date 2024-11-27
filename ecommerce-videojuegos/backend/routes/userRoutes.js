@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-
+const { protect } = require('../middleware/authMiddleware');
 // Rutas CRUD para Usuarios
 router.get('/', userController.getAllUsers);       // Obtener todos los usuarios
 router.get('/:id', userController.getUserById);    // Obtener un usuario por ID
@@ -16,5 +16,13 @@ router.delete('/:userId/cart/:gameId', userController.removeFromCart);  // Elimi
 // Rutas para la wishlist
 router.put('/:userId/wishlist/:gameId', userController.addToWishlist);         // Agregar un juego a la lista de deseos
 router.delete('/:userId/wishlist/:gameId', userController.removeFromWishlist);  // Eliminar un juego de la lista de deseos
+
+// Rutas para el registro y el inicio de sesión
+router.post('/register', userController.register);
+router.post('/login', userController.login);
+
+// router.get('/admin-only', protect(['admin']), (req, res) => {
+//     res.status(200).json({ message: 'Bienvenido, admin' });
+//   });
 
 module.exports = router;

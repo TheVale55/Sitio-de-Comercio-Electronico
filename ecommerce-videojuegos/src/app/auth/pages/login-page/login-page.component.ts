@@ -1,15 +1,40 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../../services/user.service';
+import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './login-page.component.html',
   styles: []
 })
 export class LoginPageComponent {
-  constructor(private router: Router) {}
+
+
+  public loginForm = new FormGroup({
+    emailOrUsername: new FormControl<string>(''),
+    password: new FormControl<string>(''),
+  });
+
+  constructor(private router: Router, private userService: UserService) {}
+
+  onSubmit() {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
+    this.userService.login(this.loginForm.value.emailOrUsername!, this.loginForm.value.password!)
+      .subscribe(user => {
+        localStorage.setItem('user', JSON.stringify(user.user._id));
+        this.router.navigate(['/games']);
+      });
+    
+    
+  }
+
   passwordVisible: boolean = false;
 
   togglePasswordVisibility(): void {

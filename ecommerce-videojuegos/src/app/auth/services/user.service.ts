@@ -28,4 +28,10 @@ export class UserService {
   removeFromWishlist(userID: string, gameID: string): Observable<boolean> {
     return this.http.delete<boolean>(`${this.baseUrl}/api/users/${userID}/wishlist/${gameID}`)
   }
+  register(username: string, password: string, email: string): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}/api/users/register?username=${username}&password=${password}&email=${email}`, {})
+  }
+  login(credential: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/api/users/login?credential=${credential}&password=${password}`, {})
+  }
 }

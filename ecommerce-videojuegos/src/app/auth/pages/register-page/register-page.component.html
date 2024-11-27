@@ -7,7 +7,7 @@
       <!-- Título -->
       <h3 class="text-center text-xl font-bold text-indigo-800 mb-4">Register</h3>
       <!-- Formulario -->
-      <form>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <!-- Campo Email -->
         <div class="flex items-center border border-gray-300 rounded-lg mb-4 px-3 py-2">
           <i class="fas fa-envelope text-gray-500"></i>
@@ -15,6 +15,7 @@
             type="email"
             placeholder="Email"
             class="flex-1 pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
+            formControlName="email"
           />
         </div>
         <!-- Campo Username -->
@@ -24,6 +25,7 @@
             type="text"
             placeholder="Username"
             class="flex-1 pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
+            formControlName="username"
           />
         </div>
         <!-- Campo Password -->
@@ -33,6 +35,7 @@
             [type]="passwordVisible ? 'text' : 'password'"
             placeholder="Password"
             class="flex-1 pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
+            formControlName="password"
           />
           <i
             class="fas cursor-pointer text-gray-500"
@@ -48,6 +51,7 @@
             [type]="confirmPasswordVisible ? 'text' : 'password'"
             placeholder="Confirm Password"
             class="flex-1 pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
+            formControlName="confirmPassword"
           />
           <i
             class="fas cursor-pointer text-gray-500"

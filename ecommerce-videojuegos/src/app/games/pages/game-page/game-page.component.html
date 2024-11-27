@@ -65,7 +65,7 @@
         </div>
         <p class="text-blue">ONLY AT</p>
         <h3 class="text-5xl font-bold text-green mb-6">
-            ₡{{game.Game_Price * 520 | costarricanPrice:500}}
+            ${{game.Game_Price | costarricanPrice:1}}
         </h3>
         <button (click)="addToCart(game)" class="buy-btn bg-green text-white font-semibold py-2 px-6  rounded-lg m-1 "> 
             ADD TO CART

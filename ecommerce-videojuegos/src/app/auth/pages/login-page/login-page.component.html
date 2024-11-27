@@ -7,11 +7,12 @@
     <!-- Título -->
     <h3 class="text-center text-xl font-bold text-indigo-800 mb-6">Login</h3>
     <!-- Formulario -->
-    <form>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <!-- Campo Username -->
       <div class="flex items-center border rounded-lg mb-4 px-3 py-2">
         <i class="fas fa-user text-gray-500"></i>
         <input
+          formControlName="emailOrUsername"
           type="text"
           placeholder="Username or email"
           class="w-full pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
@@ -21,6 +22,7 @@
       <div class="flex items-center border rounded-lg mb-6 px-3 py-2">
         <i class="fas fa-lock text-gray-500"></i>
         <input
+          formControlName="password"
           [type]="passwordVisible ? 'text' : 'password'"
           placeholder="Password"
           class="w-full pl-3 text-sm text-gray-700 bg-transparent focus:outline-none"
@@ -33,20 +35,20 @@
         ></i>
       </div>
 
-      <!-- Botón de Login -->
-      <button
-        type="submit"
-        class="w-full bg-indigo-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-300"
-      >
-        Login
-      </button>
-      <!-- Links -->
-      <div class="text-center mt-4 text-sm">
-        <a href="" (click)="register($event)" class="text-gray-600 hover:text-indigo-800 transition duration-300">
-          Register now
-        </a>
-      </div>
-      
     </form>
+    <!-- Botón de Login -->
+    <button
+      type="submit"
+      class="w-full bg-indigo-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-300"
+      (click)="onSubmit()"
+    >
+      Login
+    </button>
+    <!-- Links -->
+    <div class="text-center mt-4 text-sm">
+      <a href="" (click)="register($event)" class="text-gray-600 hover:text-indigo-800 transition duration-300">
+        Register now
+      </a>
+    </div>
   </div>
 </div>
