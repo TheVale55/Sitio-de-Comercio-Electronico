@@ -5,7 +5,7 @@
       <!-- Logo -->
       <div class="flex items-center space-x-3">
         <img src="/assets/hartonic-logo.png" alt="Hardtonic Logo" class="h-10" />
-        <span class="text-2xl font-semibold"></span>
+        <span class="text-2xl font-semibold">Hardtonic</span>
       </div>
 
       <!-- Barra de búsqueda -->
@@ -22,19 +22,60 @@
         <!-- Botón de login o nombre de usuario -->
         <div *ngIf="!isLoggedIn">
           <button
-            class="bg-white text-blue-800 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition"
+            class="bg-white text-[#0C056D] px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition"
             (click)="login()"
           >
             Login
           </button>
         </div>
-        <div *ngIf="isLoggedIn" class="flex items-center space-x-3">
-          <span class="text-sm">Username</span>
+        <div *ngIf="isLoggedIn" class="relative flex items-center space-x-3">
+          <span class="text-sm cursor-pointer" (click)="toggleDropdown()">Username</span>
           <img
             src="/assets/default_pp.png"
             alt="User Avatar"
-            class="w-8 h-8 rounded-full"
+            class="w-8 h-8 rounded-full cursor-pointer"
+            (click)="toggleDropdown()"
           />
+          <!-- Dropdown menu -->
+          <div
+            *ngIf="isDropdownOpen"
+            class="absolute right-0 mt-40 w-48 bg-white text-gray-700 rounded-lg shadow-lg z-50"
+          >
+            <ul class="py-1 text-sm">
+              <li>
+                <a
+                  (click)="profile()"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a
+                  (click)="cart()"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Shopping Cart
+                </a>
+              </li>
+              <li>
+                <a
+                  (click)="wishlist()"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Wishlist
+                </a>
+              </li>
+              <li>
+                <button
+                  class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  (click)="logout()"
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <!-- Carrito de compras -->
