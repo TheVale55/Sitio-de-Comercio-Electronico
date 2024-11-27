@@ -6,6 +6,7 @@ import { GamePageComponent } from './games/pages/game-page/game-page.component';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { RegisterPageComponent } from './auth/pages/register-page/register-page.component';
 import { LandPageComponent } from './shared/pages/land-page/land-page.component';
+import { GameEditComponent } from './games/pages/game-edit/game-edit.component';
 
 
 export const routes: Routes = [
@@ -21,6 +22,9 @@ export const routes: Routes = [
             { path: ':id', component: GamePageComponent  },
             { path: '**', redirectTo: 'list' }
         ]
+    },
+    { path: 'admin/edit-game/:id', 
+      component: GameEditComponent 
     },
     {
         path: 'login', // Mover esta ruta antes de los comodines

@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const Game = require('../models/game');
-const jwt = require('jsonwebtoken');
 
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
@@ -141,51 +140,6 @@ const removeFromWishlist = async (req, res) => {
   }
 };
 
-const generateToken = (user) => {
-  return jwt.sign(
-    {
-      id: user._id,
-      email: user.email,
-      role: user.role
-    },
-    'ecommerce-videojuegos-TEC',
-    { expiresIn: '1h' }
-  );
-};
-
-const register = async(req, res) => {
-  const { email, password, username } = req.query;
-  try {
-    const role = 'usuario';
-    const shoppingCart = [];
-    const purchaseHistory = [];
-    const isActive = true;
-    const user = await User.create({ email, password, username, role, shoppingCart, purchaseHistory, isActive });
-    res.status(201).json({ message: 'Usuario creado exitosamente', user });
-  }catch(error) {
-    res.status(400).json({ message: 'Error al crear el usuario', error });
-  }
-}
-
-const login = async(req, res) => {
-  const { credential, password } = req.query;
-  try{
-    const user = await User.findOne({ $or: [{ email: credential }, { username: credential }] });
-    if(!user){
-      return res.status(404).json({ message: 'Usuario no registrado' });
-    }
-    if(user.IsActive === false){
-      return res.status(401).json({ message: 'Usuario desactivado' });
-    }
-    if(!await user.matchPassword(password)){
-      return res.status(401).json({ message: 'Contraseña incorrecta' });
-    }
-    const token = generateToken(user);
-    res.status(200).json({ message: 'Inicio de sesión exitoso', token, user });
-  }catch(error){
-    res.status(400).json({ message: 'Error al iniciar sesión', error });
-  }
-}
 module.exports = {
   getAllUsers,
   getUserById,
@@ -195,7 +149,5 @@ module.exports = {
   addToCart,
   removeFromCart,
   addToWishlist,
-  removeFromWishlist,
-  register,
-  login,
+  removeFromWishlist
 };

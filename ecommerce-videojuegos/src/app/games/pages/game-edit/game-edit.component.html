@@ -1,0 +1,95 @@
+<div class="container mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-4">Edit Game</h2>
+    <form (submit)="guardarCambios()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="name" class="block text-sm font-medium">Name</label>
+          <input
+            id="name"
+            type="text"
+            [(ngModel)]="game.Game_Name"
+            class="w-full px-4 py-2 border rounded-lg"
+          />
+        </div>
+        <div>
+          <label for="description" class="block text-sm font-medium">Description</label>
+          <textarea
+            id="description"
+            [(ngModel)]="game.Game_Description"
+            class="w-full px-4 py-2 border rounded-lg"
+            rows="4"
+          ></textarea>
+        </div>
+        <div>
+          <label for="price" class="block text-sm font-medium">Price</label>
+          <input
+            id="price"
+            type="number"
+            [(ngModel)]="game.Game_Price"
+            class="w-full px-4 py-2 border rounded-lg"
+          />
+        </div>
+        <div>
+          <label for="categories" class="block text-sm font-medium">Categories</label>
+          <input
+            id="categories"
+            type="text"
+            [(ngModel)]="game.Game_Category"
+            class="w-full px-4 py-2 border rounded-lg"
+          />
+        </div>
+        <div>
+          <label for="platforms" class="block text-sm font-medium">Platforms</label>
+          <input
+            id="platforms"
+            type="text"
+            [(ngModel)]="game.Game_Platform"
+            class="w-full px-4 py-2 border rounded-lg"
+          />
+        </div>
+        <div>
+          <label for="esrb" class="block text-sm font-medium">ESRB Rating</label>
+          <input
+            id="esrb"
+            type="text"
+            [(ngModel)]="game.Game_ESRB_Rating"
+            class="w-full px-4 py-2 border rounded-lg"
+          />
+        </div>
+        <div>
+          <label for="brand" class="block text-sm font-medium">Brand</label>
+          <input
+            id="brand"
+            type="text"
+            [(ngModel)]="game.Brand"
+            class="w-full px-4 py-2 border rounded-lg"
+          />
+        </div>
+        <div>
+          <label for="discount" class="block text-sm font-medium">Discount</label>
+          <input
+            id="discount"
+            type="number"
+            [(ngModel)]="game.Discount"
+            class="w-full px-4 py-2 border rounded-lg"
+          />
+        </div>
+      </div>
+      <div class="mt-6 flex justify-end space-x-4">
+        <button
+          type="button"
+          class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+          (click)="borrarJuego()"
+        >
+          Delete
+        </button>
+        <button
+          type="submit"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+  

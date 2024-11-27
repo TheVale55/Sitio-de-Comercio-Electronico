@@ -39,5 +39,13 @@ export class GamesService {
   addViewCount(id: string): Observable<Game> {
     return this.http.put<Game>(`${this.baseUrl}/api/games/${id}/views`, {});
   }
+
+  updateGame(id: string, game: Game): Observable<Game> {
+    return this.http.put<Game>(`${this.baseUrl}/api/games/${id}`, game);
+  }
+
+  deleteGame(id: string): Observable<Game> {
+    return this.http.delete<Game>(`${this.baseUrl}/api/games/${id}`);
+  }
   
 }
