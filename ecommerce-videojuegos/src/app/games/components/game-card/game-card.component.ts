@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Game } from '../../interfaces/games.interface';
 import { Router, RouterModule } from '@angular/router';
 import { CostarricanPricePipe } from '../../pipes/costarrican-price.pipe';
+import { GamesService } from '../../services/games.service';
 @Component({
   selector: 'app-game-card',
   standalone: true,
@@ -14,7 +15,7 @@ export class GameCardComponent {
   @Input()
   public game!: Game;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private gamesService: GamesService) {}
 
 
   ngOnInit(): void {
@@ -24,6 +25,7 @@ export class GameCardComponent {
   }
 
   juegoClickeado(id: string): void {
+    this.gamesService.addViewCount(id).subscribe();
     this.router.navigate(['/games', id]);
     window.scrollTo(0, 0);
   }

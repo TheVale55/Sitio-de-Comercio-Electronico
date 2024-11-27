@@ -35,5 +35,9 @@ export class GamesService {
       )
     );
   }
+
+  addViewCount(id: string): Observable<Game> {
+    return this.http.put<Game>(`${this.baseUrl}/api/games/${id}/views`, {});
+  }
   
 }

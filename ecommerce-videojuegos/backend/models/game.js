@@ -37,6 +37,15 @@ const gameSchema = new Schema({
   },
   Discount: {
     type: Number,
+  },
+  comments: [{
+    type: String,
+  }],
+  reviews: [{
+    type: Number,
+  }],
+  views: {
+    type: Number,
   }
 }, { timestamps: true });
 

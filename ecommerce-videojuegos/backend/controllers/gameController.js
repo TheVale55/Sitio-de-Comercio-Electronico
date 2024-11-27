@@ -44,6 +44,20 @@ const getSaleGames = async (req, res) => {
   }
 };
 
+const addViewCounter = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const game = await Game.findById({ _id: id });
+    if (!game) {
+      return res.status(404).json({ message: 'Juego no encontrado' });
+    }
+    game.views += 1;
+    await game.save();
+    res.status(200).json({ message: 'Contador de vistas actualizado', game });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 // Obtener un juego por ID
 const getGameById = async (req, res) => {
@@ -101,5 +115,6 @@ module.exports = {
   createGame,
   updateGame,
   deleteGame,
-  getSaleGames
+  getSaleGames,
+  addViewCounter
 };
