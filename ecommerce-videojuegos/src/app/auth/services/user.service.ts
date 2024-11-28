@@ -39,13 +39,13 @@ export class UserService {
     return this.http.post<any>(`${this.baseUrl}/api/users/login?credential=${credential}&password=${password}`, {})
   }
   cart(userID: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/api/users/cart?userID=${userID}`)
+    return this.http.get<any>(`${this.baseUrl}/api/users/${userID}/cart`)
   }
   history(userID: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/api/users/history?userID=${userID}`)
+    return this.http.get<any>(`${this.baseUrl}/api/users/${userID}/history`)
   }
   wishlist(userID: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/api/users/wishlist?userID=${userID}`)
+    return this.http.get<any>(`${this.baseUrl}/api/users/${userID}/wishlist`)
   }
   updateUser(userID: string, user: User): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/api/users/${userID}`, user)
