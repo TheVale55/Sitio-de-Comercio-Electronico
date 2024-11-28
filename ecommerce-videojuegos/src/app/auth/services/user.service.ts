@@ -16,6 +16,7 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/api/users`)
   }
+  
   addToCart(userID: string, gameID: string): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/api/users/${userID}/cart/${gameID}`, {})
   }
@@ -33,5 +34,11 @@ export class UserService {
   }
   login(credential: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/users/login?credential=${credential}&password=${password}`, {})
+  }
+  cart(userID: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/api/users/cart?userID=${userID}`)
+  }
+  history(userID: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/api/users/history?userID=${userID}`)
   }
 }

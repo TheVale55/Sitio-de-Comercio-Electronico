@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const Game = require('../models/game');
-const jwt = require('jsonwebtoken');
 
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
@@ -153,6 +152,19 @@ const generateToken = (user) => {
   );
 };
 
+const getToken = (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ message: 'Token no proporcionado' });
+  }
+  try {
+    const decoded = jwt.verify(token, 'ecommerce-videojuegos-TEC');
+    res.status(200).json({ token: token, user: decoded });
+  } catch (err) {
+    res.status(401).json({ message: 'Token inválido' });
+  }
+}
+
 const register = async(req, res) => {
   const { email, password, username } = req.query;
   try {
@@ -186,6 +198,47 @@ const login = async(req, res) => {
     res.status(400).json({ message: 'Error al iniciar sesión', error });
   }
 }
+
+const changeRole = async(req, res) => {
+  const { newRole } = req.query;
+  try{
+    const user = await User.findById(req.params.id);
+    if(!user){
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    user.role = newRole;
+    await user.save();
+    res.status(200).json({ message: 'Rol de usuario actualizado', user });
+  }catch(error){
+    res.status(400).json({ message: 'Error al actualizar el rol del usuario', error });
+  }
+
+}
+
+const getShoppingCart = async (req, res) => {
+  const userID = req.params.id;
+  try {
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.status(200).json({ shoppingCart: user.shoppingCart });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+const getPurchaseHistory = async (req, res) => {
+  const userID = req.params.id;
+  try {
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.status(200).json({ purchaseHistory: user.purchaseHistory });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 module.exports = {
   getAllUsers,
   getUserById,
@@ -198,4 +251,8 @@ module.exports = {
   removeFromWishlist,
   register,
   login,
+  changeRole,
+  getToken,
+  getShoppingCart,
+  getPurchaseHistory,
 };

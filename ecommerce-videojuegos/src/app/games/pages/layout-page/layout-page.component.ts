@@ -72,4 +72,5 @@ export class LayoutPageComponent {
 
   cartItems: number = 0; // Número de elementos en el carrito
 
+  
 }
