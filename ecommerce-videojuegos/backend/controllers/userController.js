@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const Game = require('../models/game');
-
+const jwt = require('jsonwebtoken');
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
   try {
@@ -141,7 +141,7 @@ const removeFromWishlist = async (req, res) => {
 };
 
 const generateToken = (user) => {
-  return jwt.sign(
+  const token = jwt.sign(
     {
       id: user._id,
       email: user.email,
@@ -150,6 +150,7 @@ const generateToken = (user) => {
     'ecommerce-videojuegos-TEC',
     { expiresIn: '1h' }
   );
+  return token
 };
 
 const getToken = (req, res) => {
