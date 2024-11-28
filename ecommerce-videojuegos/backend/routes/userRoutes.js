@@ -21,6 +21,10 @@ router.delete('/:userId/wishlist/:gameId', userController.removeFromWishlist);  
 router.post('/register', userController.register);
 router.post('/login', userController.login);
 
+router.put('/:id/role', userController.changeRole);
+
+router.get('/token', userController.getToken);
+
 // router.get('/admin-only', protect(['admin']), (req, res) => {
 //     res.status(200).json({ message: 'Bienvenido, admin' });
 //   });

@@ -29,6 +29,7 @@ export class LoginPageComponent {
     this.userService.login(this.loginForm.value.emailOrUsername!, this.loginForm.value.password!)
       .subscribe(user => {
         localStorage.setItem('user', JSON.stringify(user.user._id));
+        localStorage.setItem('role', JSON.stringify(user.user.role));
         this.router.navigate(['/games']);
       });
     
