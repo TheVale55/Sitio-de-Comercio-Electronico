@@ -10,7 +10,7 @@ import { GamesService } from '../../services/games.service';
   standalone: true,
   imports: [CommonModule, RouterModule, CostarricanPricePipe],
   templateUrl: './game-card.component.html',
-  styleUrl: '../../../app.component.scss',
+  styles: '',
 })
 export class GameCardComponent implements OnInit {
   @Input()
@@ -24,13 +24,13 @@ export class GameCardComponent implements OnInit {
     if (!this.game) {
       throw Error('Game property is required');
     }
-
-    // Verifica si el usuario tiene el rol de administrador
-    const userRole = localStorage.getItem('role'); // Supongamos que el rol se guarda en el localStorage
-    this.isAdmin = userRole === '"administrador"'; // Cambiar la condición según cómo determines el rol
-    console.log(this.isAdmin);
+    
+    // Verifica si el usuario es administrador
+    if (localStorage.getItem('role') === '"administrador"') {
+      this.isAdmin = true;
+    }
   }
-
+  
   juegoClickeado(id: string): void {
     this.gamesService.addViewCount(id).subscribe();
     this.router.navigate(['/games', id]);

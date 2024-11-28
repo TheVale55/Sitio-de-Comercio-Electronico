@@ -18,7 +18,7 @@
       >
         View details
       </button>
-      <!-- Mostrar el botón de Editar si es administrador -->
+      <!-- Mostrar el botón de Editar solo si es administrador -->
       <button
         *ngIf="isAdmin"
         class="bg-yellow-500 text-white font-medium py-2 px-4 rounded-lg hover:bg-yellow-600 transition"
@@ -26,6 +26,7 @@
       >
         Edit
       </button>
+      
     </div>
   </div>
 </div>
