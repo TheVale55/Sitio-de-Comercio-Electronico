@@ -212,8 +212,33 @@ const changeRole = async(req, res) => {
   }catch(error){
     res.status(400).json({ message: 'Error al actualizar el rol del usuario', error });
   }
+
 }
 
+const getShoppingCart = async (req, res) => {
+  const userID = req.params.id;
+  try {
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.status(200).json({ shoppingCart: user.shoppingCart });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+const getPurchaseHistory = async (req, res) => {
+  const userID = req.params.id;
+  try {
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.status(200).json({ purchaseHistory: user.purchaseHistory });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 module.exports = {
   getAllUsers,
   getUserById,
@@ -227,5 +252,7 @@ module.exports = {
   register,
   login,
   changeRole,
-  getToken
+  getToken,
+  getShoppingCart,
+  getPurchaseHistory,
 };

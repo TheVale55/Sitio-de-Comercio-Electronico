@@ -25,6 +25,9 @@ router.put('/:id/role', userController.changeRole);
 
 router.get('/token', userController.getToken);
 
+router.get('/:id/cart', userController.getShoppingCart);
+router.get('/:id/history', userController.getPurchaseHistory);
+
 // router.get('/admin-only', protect(['admin']), (req, res) => {
 //     res.status(200).json({ message: 'Bienvenido, admin' });
 //   });
