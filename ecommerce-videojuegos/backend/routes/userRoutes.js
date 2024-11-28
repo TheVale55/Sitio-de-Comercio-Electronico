@@ -4,7 +4,7 @@ const userController = require('../controllers/userController');
 const { protect } = require('../middleware/authMiddleware');
 // Rutas CRUD para Usuarios
 router.get('/', userController.getAllUsers);       // Obtener todos los usuarios
-router.get('/:id', userController.getUserById);    // Obtener un usuario por ID
+router.get('/user', userController.getUserById);    // Obtener un usuario por ID
 router.post('/', userController.createUser);       // Crear un nuevo usuario
 router.put('/:id', userController.updateUser);     // Actualizar un usuario por ID
 router.delete('/:id', userController.deleteUser);  // Desactivar un usuario por ID

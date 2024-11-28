@@ -31,7 +31,7 @@
           </button>
         </div>
         <div *ngIf="isLoggedIn" class="relative flex items-center space-x-3">
-          <span class="text-sm cursor-pointer" (click)="toggleDropdown()">Username</span>
+          <span class="text-sm cursor-pointer" (click)="toggleDropdown()">{{userName}}</span>
           <img
             src="/assets/default_pp.png"
             alt="User Avatar"
