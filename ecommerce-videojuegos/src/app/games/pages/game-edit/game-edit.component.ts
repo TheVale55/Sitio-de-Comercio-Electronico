@@ -103,7 +103,7 @@ export class GameEditComponent implements OnInit {
     this.gameService.deleteGame(this.game._id).subscribe(
       (response) => {
         console.log('Juego eliminado con éxito:', response);
-        this.router.navigate(['/admin/manage-games']); // Redirigir tras eliminar
+        this.router.navigate(['/games']); // Redirigir tras eliminar
       },
       (error) => {
         console.error('Error al eliminar el juego:', error);
