@@ -11,21 +11,23 @@ const paymentSchema = new Schema({
     required: true,
   },
   Games: [{
-    Game_ID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Game',
       required: true,
-    }
-  }],
+    }],
   Purchase_Address: {
     type: String,
     required: true,
-    },
+  },
   Order_Status: {
     type: String,
     enum: ['en preparación', 'enviado', 'entregado'],
     default: 'en preparación',
-    },
+  },
+  Total_Amount: {
+    type: Number,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

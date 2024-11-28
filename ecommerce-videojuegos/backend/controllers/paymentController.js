@@ -1,5 +1,5 @@
 const Payment = require('../models/payment');
-
+const User = require('../models/user');
 // Obtener todos los pagos
 const getAllPayments = async (req, res) => {
   try {
@@ -28,7 +28,12 @@ const createPayment = async (req, res) => {
   const payment = new Payment(req.body);
   try {
     const newPayment = await payment.save();
-    res.status(201).json(newPayment);
+    const user = await User.findById(newPayment.User_ID);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    user.purchaseHistory.push(newPayment._id);
+    res.status(201).json(payment);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

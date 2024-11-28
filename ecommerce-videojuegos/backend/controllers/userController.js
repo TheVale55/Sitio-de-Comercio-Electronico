@@ -241,6 +241,20 @@ const getPurchaseHistory = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+const getWishlist = async (req, res) => {
+  const userID = req.params.id;
+  try {
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.status(200).json({ wishlist: user.wishlist });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -257,4 +271,5 @@ module.exports = {
   getToken,
   getShoppingCart,
   getPurchaseHistory,
+  getWishlist
 };

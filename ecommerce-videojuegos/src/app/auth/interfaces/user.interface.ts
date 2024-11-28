@@ -18,5 +18,6 @@ export interface Payment {
     Games: string[],
     Purchase_Address: string,
     Order_Status: string,
+    Total_Amount: number,
     createdAt: Date
 }

@@ -29,6 +29,10 @@ const userSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Game',
   }],
+  wishlist: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Game',
+  }],
   purchaseHistory: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Payment',
