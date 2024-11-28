@@ -77,6 +77,7 @@ export class GamePageComponent {
       return;
     }else{
       this.userService.addToCart(userID, game._id)
+      console.log("Game added to cart of ", userID)
     }
   }
   addToWishlist(game: Game) {

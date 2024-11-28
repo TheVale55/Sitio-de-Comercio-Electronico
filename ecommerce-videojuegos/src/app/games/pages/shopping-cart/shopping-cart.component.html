@@ -1,24 +1,38 @@
-<section class="py-8 antialiased dark:bg-gray-900 md:py-16">
+<!--SHOPPING CART -->
+<section class="py-8 antialiased dark:bg-gray-900 md:py-16" *ngIf="isCartVisible">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <h2 class="text-5xl text-center text-blue font-bold dark:text-white">Shopping Cart</h2>
     
         <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
             <!--Items-->
             <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
-            <div class="space-y-6" *ngFor="let game of shoppingCart">
-                <app-game-shopping-card
-                [gameId]="game"
-                ></app-game-shopping-card>
-            </div>
+                @for(game of shoppingCart; track $index){
+                    <app-game-shopping-card
+                    [gameId]="game"
+                    (total_price)="onTotalPriceChange($event, $index)"
+                    ></app-game-shopping-card>
+                }
             </div>
     
             <!--Shipping-->
             <div class="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
             <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                <p class="text-xl font-semibold text-gray-900 dark:text-white">Calculate Shipping</p>
+                <p class="text-xl font-semibold text-gray-900 dark:text-white">Estimate Shipping</p>
     
                 <div class="space-y-4">
                 
+                    <div>
+                        <label for="shipping-options">Choose a shipping option:</label>
+                        <select id="shipping-options" (change)="updateShipping($event)">
+                          <option value="5">Inside GAM - Express</option>
+                          <option value="2">Inside GAM - Standard</option>
+                          <option value="15">Outside GAM - Express</option>
+                          <option value="5">Outside GAM - Standard</option>
+                        </select>
+                      </div>
+                      <p>Starting Shipping Cost: ${{ shipping }}</p>
+                      
+
                 <button class="w-full mt-4 bg-blue -600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition">Calculate </button>
                 <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
                     <dt class="text-base font-bold text-gray-900 dark:text-white">Shipping</dt>
@@ -35,12 +49,12 @@
                 <div class="space-y-2">
                     <dl class="flex items-center justify-between gap-4">
                     <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Subtotal</dt>
-                    <dd class="text-base font-medium text-gray-900 dark:text-white">${{total}}</dd>
+                    <dd class="text-base font-medium text-gray-900 dark:text-white">${{subtotal}}</dd>
                     </dl>
     
                     <dl class="flex items-center justify-between gap-4">
                     <dt class="text-base font-normal text-gray-500 dark:text-gray-400">Shipping</dt>
-                    <dd class="text-base font-medium text-green-600">-${{shipping}}</dd>
+                    <dd class="text-base font-medium text-gray-900 dark:text-white">${{shipping}}</dd>
                     </dl>
     
                     <dl class="flex items-center justify-between gap-4">
@@ -51,14 +65,16 @@
     
                 <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
                     <dt class="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-                    <dd class="text-base font-bold text-gray-900 dark:text-white">${{total+shipping}}</dd>
+                    <dd class="text-base font-bold text-gray-900 dark:text-white">${{total}}</dd>
                 </dl>
                 </div>
     
-                <button class="w-full mt-4 bg-blue -600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition">Continue to Checkout </button>
+                <button class="w-full mt-4 bg-blue -600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition"
+                (click)="toggleCart()"
+                >Continue to Checkout </button>
                 <div class="flex items-center justify-center gap-2">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>
-                <a href="#" title="" class="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">
+                <a href="/games/list" title="" class="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">
                     Continue Shopping
                     <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
@@ -69,6 +85,185 @@
             </div>
         </div>
     </div>
-  </section>
+</section>
 
-  <app-checkout></app-checkout>
+
+<!--CHECK OUT -->
+<div id="checkout-buttons" *ngIf="!isCartVisible">
+    <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:mx-6 xl:mx-96">
+        <button class="w-full mt-4 bg-blue -600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition"
+        (click)="toggleCart()"
+        >Go back to Shopping Cart </button>
+        <div class="flex items-center justify-center gap-2">
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400"> or </span>
+        <a href="/games/list" title="" class="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">
+            Continue Shopping
+            <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
+            </svg>
+        </a>
+    </div>
+</div>
+
+<div id="checkout-buttons" *ngIf="!isCartVisible">
+
+    <h2 class="text-5xl text-center text-blue font-bold dark:text-white my-5">Order Summary</h2>
+
+    <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:mx-5 xl:mx-96 mb-5">
+        <p class="text-xl font-semibold text-gray-900 dark:text-white">Order total</p>
+
+        <div class="space-y-4">
+        <div class="space-y-2">
+            <dl class="flex items-center justify-between gap-4">
+            <dt class="text-xl font-normal text-gray-500 dark:text-gray-400">Subtotal</dt>
+            <dd class="text-xl font-medium text-gray-900 dark:text-white">${{subtotal}}</dd>
+            </dl>
+
+            <dl class="flex items-center justify-between gap-4">
+            <dt class="text-xl font-normal text-gray-500 dark:text-gray-400">Shipping</dt>
+            <dd class="text-xl font-medium text-gray-900 dark:text-white">${{shipping}}</dd>
+            </dl>
+
+            <dl class="flex items-center justify-between gap-4">
+            <dt class="text-xl font-normal text-gray-500 dark:text-gray-400">Tax</dt>
+            <dd class="text-xl font-medium text-gray-900 dark:text-white">{{tax}}</dd>
+            </dl>
+        </div>
+
+        <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
+            <dt class="text-xl font-bold text-gray-900 dark:text-white">Total</dt>
+            <dd class="text-xl font-bold text-gray-900 dark:text-white">${{final_total}}</dd>
+        </dl>
+        </div>
+    </div>
+    </div>
+
+
+<h2 class="text-5xl text-center text-blue font-bold dark:text-white my-5">Shipping Information</h2>
+<div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6 xl:mx-96 sm:mx-5">
+    <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+<h2 class="text-5xl text-center text-blue font-bold dark:text-white my-5">Payment Method</h2>
+<div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6 xl:mx-96 sm:mx-5">
+    <div class="">
+            <h2 class="text-lg font-semibold mb-4">Payment Information</h2>
+
+            <form (ngSubmit)="onSubmit()" #paymentForm="ngForm" novalidate>
+
+              <!-- Card Number -->
+              <div class="mb-4">
+                <label for="cardNumber" class="block text-lg font-medium text-gray-700">Card Number</label>
+                <input
+                  type="text"
+                  id="cardNumber"
+                  name="cardNumber"
+                  class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg"
+                  [(ngModel)]="paymentData.cardNumber"
+                  #cardNumber="ngModel"
+                  required
+                  pattern="^[0-9]{16}$"
+                />
+                <span
+                  *ngIf="cardNumber.invalid && cardNumber.touched"
+                  class="text-lg text-red-600"
+                  >Card number must be 16 digits.</span
+                >
+              </div>
+          
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <!-- Expiry Date -->
+                <div>
+                  <label for="expiryDate" class="block text-lg font-medium text-gray-700">
+                    Expiry Date
+                  </label>
+                  <input
+                    type="text"
+                    id="expiryDate"
+                    name="expiryDate"
+                    placeholder="MM/YY"
+                    class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg"
+                    [(ngModel)]="paymentData.expiryDate"
+                    #expiryDate="ngModel"
+                    required
+                    pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
+                  />
+                  <span
+                    *ngIf="expiryDate.invalid && expiryDate.touched"
+                    class="text-sm text-red-600"
+                  >
+                    Enter a valid expiry date (MM/YY).
+                  </span>
+                </div>
+              
+                <!-- Security Code -->
+                <div>
+                  <label for="securityCode" class="block text-lg font-medium text-gray-700">
+                    Security Code
+                  </label>
+                  <input
+                    type="password"
+                    id="securityCode"
+                    name="securityCode"
+                    class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg"
+                    [(ngModel)]="paymentData.securityCode"
+                    #securityCode="ngModel"
+                    required
+                    pattern="^[0-9]{3,4}$"
+                  />
+                  <span
+                    *ngIf="securityCode.invalid && securityCode.touched"
+                    class="text-sm text-red-600"
+                  >
+                    Security code must be 3 or 4 digits.
+                  </span>
+                </div>
+              </div>
+              
+          
+              <!-- Cardholder Name -->
+              <div class="mb-4">
+                <label for="cardholderName" class="block text-lg font-medium text-gray-700">Cardholder Name</label>
+                <input
+                  type="text"
+                  id="cardholderName"
+                  name="cardholderName"
+                  class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg"
+                  [(ngModel)]="paymentData.cardholderName"
+                  #cardholderName="ngModel"
+                  required
+                />
+                <span
+                  *ngIf="cardholderName.invalid && cardholderName.touched"
+                  class="text-sm text-red-600"
+                  >Cardholder name is required.</span
+                >
+              </div>
+          
+              <!-- Submit Button -->
+              <div>
+                <button
+                  type="submit"
+                  class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
+                  [disabled]="paymentForm.invalid"
+                >
+                  Process Order
+                </button>
+              </div>
+            </form>
+       
+          
+
+    </div>
+</div>
+
+</div>

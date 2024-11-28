@@ -26,6 +26,8 @@ export class GameEditComponent implements OnInit {
     Discount: 0,
     Game_Short_Screenshots: [],
     Game_Background_Image: '',
+    comments: [],
+    reviews: 0
   };
 
   constructor(

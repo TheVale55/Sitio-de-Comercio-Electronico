@@ -1,7 +1,8 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Game } from '../../interfaces/games.interface';
 import { CommonModule } from '@angular/common';
 import { GamesService } from '../../services/games.service';
+import { UserService } from '../../../auth/services/user.service';
 
 @Component({
   selector: 'app-game-shopping-card',
@@ -16,11 +17,10 @@ export class GameShoppingCardComponent {
 
   game !: Game;
   quantity:number=1;
-  
-  @Output()
-  total_price:number = 0;
+  price : number = 0;
+  @Output() total_price = new EventEmitter<number>();
 
-  constructor(private gameService: GamesService){}
+  constructor(private gameService: GamesService, private userService : UserService){}
 
   ngOnInit(): void {
     if (!this.gameId) {
@@ -34,11 +34,19 @@ export class GameShoppingCardComponent {
   }
 
   updateTotal(){
-    this.total_price = this.quantity * this.game.Game_Price
+    this.price = this.quantity * this.game.Game_Price;
+    this.price = this.roundToDecimal(this.price, 2);
+    this.total_price.emit(this.price);
+  }
+
+  roundToDecimal(num: number, decimalPlaces: number): number {
+    const factor = Math.pow(10, decimalPlaces);
+    return Math.round(num * factor) / factor;
   }
 
   addToWishlist(){
-
+    const userId = "";
+    this.userService.addToCart(userId, this.gameId)
   }
 
   removeFromShoppingCart(){
@@ -47,20 +55,12 @@ export class GameShoppingCardComponent {
 
   increaseQuantity(){
     this.quantity++;
-    const inputField = document.getElementById("counter-input") as HTMLInputElement;
-    if (inputField) {
-      inputField.value = this.quantity.toString();
-    }
     this.updateTotal()
   }
 
   decreaseQuantity(){
     if(this.quantity>1){
       this.quantity--;
-      const inputField = document.getElementById("counter-input") as HTMLInputElement;
-      if (inputField) {
-        inputField.value = this.quantity.toString();
-      }
     }
     this.updateTotal()
   }
