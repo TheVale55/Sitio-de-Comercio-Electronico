@@ -13,8 +13,9 @@ const getAllUsers = async (req, res) => {
 
 // Obtener un usuario por ID
 const getUserById = async (req, res) => {
+  const { userID } = req.query;
   try {
-    const user = await User.findById(req.params.id, { IsActive: true });
+    const user = await User.findById({_id: userID, isActive: true}).select('-password');
     if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
