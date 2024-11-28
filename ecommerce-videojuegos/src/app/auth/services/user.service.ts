@@ -1,3 +1,4 @@
+import { Payment } from './../interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
@@ -16,7 +17,9 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/api/users`)
   }
-  
+  getUserByID(id: string): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/api/users/user?userID=${id}`)
+  }
   addToCart(userID: string, gameID: string): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/api/users/${userID}/cart/${gameID}`, {})
   }
@@ -41,4 +44,14 @@ export class UserService {
   history(userID: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/api/users/history?userID=${userID}`)
   }
+  wishlist(userID: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/api/users/wishlist?userID=${userID}`)
+  }
+  updateUser(userID: string, user: User): Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/api/users/${userID}`, user)
+  }
+  deleteUser(userID: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}/api/users/${userID}`)
+  }
+  
 }

@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class ShoppingCartComponent {
   public userId !: User;
+  //TODO BRAYTON remove these strings to try out service
   public shoppingCart: string[] = ["673e74d5a2be1410b7e213d6","673e74d5a2be1410b7e21410"];
   public totalPrices: number[] = [0,0];
   public total = 0;
@@ -36,9 +37,13 @@ export class ShoppingCartComponent {
       this.route.navigate(['/login'])
       return;
     }else{
-      //TODO FIX USER SERVICE CART NOT WORKING 
+      //TODO BRAYTON FIX USER SERVICE CART NOT WORKING 
+      console.log("HELLO THERE");
       this.userService.cart(userID).subscribe(
-        (cart) => {this.shoppingCart = cart; console.log ("user id is ", userID);console.log ("shopping cart is " + this.shoppingCart)}
+        (cart) => {
+          this.shoppingCart = cart; 
+          console.log ("user id is ", userID);
+          console.log ("shopping cart is " + this.shoppingCart)}
       )
     }
 

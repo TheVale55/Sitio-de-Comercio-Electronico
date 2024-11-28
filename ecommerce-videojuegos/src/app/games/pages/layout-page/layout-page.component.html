@@ -5,7 +5,6 @@
       <!-- Logo -->
       <div class="flex items-center space-x-3">
         <img src="/assets/hartonic-logo.png" alt="Hardtonic Logo" class="h-10" />
-        <span class="text-2xl font-semibold">Hardtonic</span>
       </div>
 
       <!-- Barra de búsqueda -->
@@ -31,7 +30,7 @@
           </button>
         </div>
         <div *ngIf="isLoggedIn" class="relative flex items-center space-x-3">
-          <span class="text-sm cursor-pointer" (click)="toggleDropdown()">Username</span>
+          <span class="text-sm cursor-pointer" (click)="toggleDropdown()">{{userName}}</span>
           <img
             src="/assets/default_pp.png"
             alt="User Avatar"

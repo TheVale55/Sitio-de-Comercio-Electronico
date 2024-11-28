@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const Game = require('../models/game');
-
+const jwt = require('jsonwebtoken');
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
   try {
@@ -13,8 +13,9 @@ const getAllUsers = async (req, res) => {
 
 // Obtener un usuario por ID
 const getUserById = async (req, res) => {
+  const { userID } = req.query;
   try {
-    const user = await User.findById(req.params.id, { IsActive: true });
+    const user = await User.findById({_id: userID, isActive: true}).select('-password');
     if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
@@ -141,7 +142,7 @@ const removeFromWishlist = async (req, res) => {
 };
 
 const generateToken = (user) => {
-  return jwt.sign(
+  const token = jwt.sign(
     {
       id: user._id,
       email: user.email,
@@ -150,6 +151,7 @@ const generateToken = (user) => {
     'ecommerce-videojuegos-TEC',
     { expiresIn: '1h' }
   );
+  return token
 };
 
 const getToken = (req, res) => {
@@ -239,6 +241,20 @@ const getPurchaseHistory = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+const getWishlist = async (req, res) => {
+  const userID = req.params.id;
+  try {
+    const user = await User.findById(userID);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.status(200).json({ wishlist: user.wishlist });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -255,4 +271,5 @@ module.exports = {
   getToken,
   getShoppingCart,
   getPurchaseHistory,
+  getWishlist
 };

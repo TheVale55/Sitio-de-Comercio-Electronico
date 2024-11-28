@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
-import { User } from '../../../auth/interfaces/user.interface';
 import { UserService } from '../../../auth/services/user.service';
-
 @Component({
   selector: 'app-layout-page',
   standalone: true,
@@ -14,13 +12,16 @@ import { UserService } from '../../../auth/services/user.service';
 export class LayoutPageComponent {
   isLoggedIn: boolean = false; // Estado del usuario logueado
   isDropdownOpen: boolean = false;
-  user !: string;
+  userName: string = ''; // Nombre del usuario
 
-  constructor(private router: Router, private eRef: ElementRef, private userService : UserService) {
+  constructor(private router: Router, private eRef: ElementRef, private userService: UserService) {
     // Simula un estado de autenticación. En un caso real, puedes usar un servicio para verificar si el usuario está logueado.
     const user = localStorage.getItem('user'); // Ejemplo: obtén datos del usuario almacenados
     if (user) {
       this.isLoggedIn = true;
+      this.userService.getUserByID(user.toString().replace(/"/g, '')).subscribe(user => {
+        this.userName = user.username;
+      });
     }
   }
 
@@ -38,11 +39,11 @@ export class LayoutPageComponent {
   }
 
   logout() {
-    // Simula el cierre de sesión. En un caso real, debes eliminar los datos del usuario del localStorage.
     localStorage.removeItem('user');
+    localStorage.removeItem('role');
     this.isLoggedIn = false;
     this.isDropdownOpen = false;
-    this.router.navigate(['/games']);
+    this.router.navigate(['/']);
   }
 
   profile() {
