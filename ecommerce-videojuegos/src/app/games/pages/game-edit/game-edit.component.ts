@@ -5,13 +5,12 @@ import { CommonModule } from '@angular/common';
 import { Game } from '../../interfaces/games.interface';
 import { GamesService } from '../../services/games.service';
 
-
 @Component({
   selector: 'app-game-edit',
   templateUrl: './game-edit.component.html',
   styles: '',
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule],
 })
 export class GameEditComponent implements OnInit {
   public game: Game = {
@@ -27,6 +26,12 @@ export class GameEditComponent implements OnInit {
     Game_Short_Screenshots: [],
     Game_Background_Image: '',
   };
+
+  // Opciones dinámicas para dropdowns
+  public categories: string[] = [];
+  public platforms: string[] = [];
+  public esrbRatings: string[] = [];
+  public brands: string[] = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -44,6 +49,26 @@ export class GameEditComponent implements OnInit {
         }
         this.game = game; // Cargar los datos del juego en el formulario
       });
+    });
+  
+    // Cargar las opciones dinámicas para los dropdowns
+    this.loadDropdownData();
+  }
+  
+
+  // Método para cargar datos dinámicos
+  loadDropdownData(): void {
+    this.gameService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+    });
+    this.gameService.getPlatforms().subscribe((platforms) => {
+      this.platforms = platforms;
+    });
+    this.gameService.getEsrbRatings().subscribe((ratings) => {
+      this.esrbRatings = ratings;
+    });
+    this.gameService.getBrands().subscribe((brands) => {
+      this.brands = brands;
     });
   }
 
