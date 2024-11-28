@@ -37,13 +37,10 @@ export class ShoppingCartComponent {
       this.route.navigate(['/login'])
       return;
     }else{
-      //TODO BRAYTON FIX USER SERVICE CART NOT WORKING 
-      console.log("HELLO THERE");
       this.userService.cart(userID).subscribe(
         (cart) => {
           this.shoppingCart = cart; 
-          console.log ("user id is ", userID);
-          console.log ("shopping cart is " + this.shoppingCart)}
+        }
       )
     }
 
