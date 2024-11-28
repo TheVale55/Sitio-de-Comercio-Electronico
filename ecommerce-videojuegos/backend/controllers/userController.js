@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const Game = require('../models/game');
-const jwt = require('jsonwebtoken');
 
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {

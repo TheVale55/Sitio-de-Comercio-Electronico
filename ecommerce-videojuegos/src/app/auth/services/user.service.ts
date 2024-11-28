@@ -16,6 +16,7 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}/api/users`)
   }
+  
   addToCart(userID: string, gameID: string): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/api/users/${userID}/cart/${gameID}`, {})
   }

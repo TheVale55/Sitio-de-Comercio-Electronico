@@ -66,4 +66,8 @@ export class LayoutPageComponent {
       this.isDropdownOpen = false; // Cierra el menú si se hace clic fuera de él
     }
   }
+
+  cartItems: number = 0; // Número de elementos en el carrito
+
+  
 }
