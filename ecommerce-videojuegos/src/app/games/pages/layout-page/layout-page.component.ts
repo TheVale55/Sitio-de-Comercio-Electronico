@@ -39,12 +39,11 @@ export class LayoutPageComponent {
   }
 
   logout() {
-    // Simula el cierre de sesión. En un caso real, debes eliminar los datos del usuario del localStorage.
     localStorage.removeItem('user');
     localStorage.removeItem('role');
     this.isLoggedIn = false;
     this.isDropdownOpen = false;
-    this.router.navigate(['/games']);
+    this.router.navigate(['/']);
   }
 
   profile() {

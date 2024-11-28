@@ -27,7 +27,8 @@ export class GameCardComponent implements OnInit {
 
     // Verifica si el usuario tiene el rol de administrador
     const userRole = localStorage.getItem('role'); // Supongamos que el rol se guarda en el localStorage
-    this.isAdmin = userRole === 'admin'; // Cambiar la condición según cómo determines el rol
+    this.isAdmin = userRole === '"administrador"'; // Cambiar la condición según cómo determines el rol
+    console.log(this.isAdmin);
   }
 
   juegoClickeado(id: string): void {
