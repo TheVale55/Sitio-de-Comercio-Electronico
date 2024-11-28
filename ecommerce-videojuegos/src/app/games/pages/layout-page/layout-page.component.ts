@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
+import { User } from '../../../auth/interfaces/user.interface';
+import { UserService } from '../../../auth/services/user.service';
 
 @Component({
   selector: 'app-layout-page',
@@ -12,8 +14,9 @@ import { RouterModule, Router } from '@angular/router';
 export class LayoutPageComponent {
   isLoggedIn: boolean = false; // Estado del usuario logueado
   isDropdownOpen: boolean = false;
+  user !: string;
 
-  constructor(private router: Router, private eRef: ElementRef) {
+  constructor(private router: Router, private eRef: ElementRef, private userService : UserService) {
     // Simula un estado de autenticación. En un caso real, puedes usar un servicio para verificar si el usuario está logueado.
     const user = localStorage.getItem('user'); // Ejemplo: obtén datos del usuario almacenados
     if (user) {
@@ -51,7 +54,7 @@ export class LayoutPageComponent {
   cart() {
     console.log('Redirigiendo a la página de carrito...');
     this.isDropdownOpen = false;
-    this.router.navigate(['/cart']); // Asegúrate de que esta ruta exista
+    this.router.navigate(['/games/cart']); // Asegúrate de que esta ruta exista
   }
 
   wishlist() {

@@ -6,6 +6,7 @@ import { GamePageComponent } from './games/pages/game-page/game-page.component';
 import { LoginPageComponent } from './auth/pages/login-page/login-page.component';
 import { RegisterPageComponent } from './auth/pages/register-page/register-page.component';
 import { LandPageComponent } from './shared/pages/land-page/land-page.component';
+import { ShoppingCartComponent } from './games/pages/shopping-cart/shopping-cart.component';
 
 
 export const routes: Routes = [
@@ -18,8 +19,10 @@ export const routes: Routes = [
         component: LayoutPageComponent,
         children: [
             { path: 'list', component: GameListComponent },
+            { path: 'cart', component: ShoppingCartComponent},
             { path: ':id', component: GamePageComponent  },
-            { path: '**', redirectTo: 'list' }
+            { path: '**', redirectTo: 'list' },
+       
         ]
     },
     {
@@ -30,6 +33,7 @@ export const routes: Routes = [
         path: 'register', // Mover esta ruta antes de los comodines
         component: RegisterPageComponent
     },
+   
     {
         path: '404',
         component: Error404PageComponent

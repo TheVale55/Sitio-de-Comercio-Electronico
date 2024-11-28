@@ -10,4 +10,6 @@ export interface Game {
     Game_Background_Image: string,
     Brand: string,
     Discount: number,
+    comments : string[],
+    reviews : number,
 }
