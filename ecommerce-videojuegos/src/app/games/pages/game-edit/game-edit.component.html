@@ -1,122 +1,314 @@
 <div class="container mx-auto p-6">
-  <h2 class="text-2xl font-bold mb-4">Edit Game</h2>
-  <form (submit)="guardarCambios()">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Nombre -->
-      <div>
-        <label for="name" class="block text-sm font-medium">Name</label>
-        <input
-          id="name"
-          type="text"
-          [(ngModel)]="game.Game_Name"
-          name="name"
-          class="w-full px-4 py-2 border rounded-lg"
-        />
-      </div>
-      <!-- Descripción -->
-      <div class="md:col-span-2">
-        <label for="description" class="block text-sm font-medium">Description</label>
-        <textarea
-          id="description"
-          [(ngModel)]="game.Game_Description"
-          name="description"
-          class="w-full px-4 py-2 border rounded-lg"
-          rows="4"
-        ></textarea>
-      </div>
-      <!-- Precio -->
-      <div>
-        <label for="price" class="block text-sm font-medium">Price</label>
-        <input
-          id="price"
-          type="number"
-          [(ngModel)]="game.Game_Price"
-          name="price"
-          class="w-full px-4 py-2 border rounded-lg"
-        />
-      </div>
-      <!-- Categorías -->
-      <div>
-        <label for="categories" class="block text-sm font-medium">Categories</label>
-        <select
-          id="categories"
-          [(ngModel)]="game.Game_Category"
-          name="categories"
-          class="w-full px-4 py-2 border rounded-lg"
-        >
-          <option *ngFor="let category of categories" [value]="category" [selected]="game.Game_Category.includes(category)">
-            {{ category }}
-          </option>
-        </select>
-      </div>
-      <!-- Plataformas -->
-      <div>
-        <label for="platforms" class="block text-sm font-medium">Platforms</label>
-        <select
-          id="platforms"
-          [(ngModel)]="game.Game_Platform"
-          name="platforms"
-          class="w-full px-4 py-2 border rounded-lg"
-        >
-          <option *ngFor="let platform of platforms" [value]="platform" [selected]="game.Game_Platform.includes(platform)">
-            {{ platform }}
-          </option>
-        </select>
-      </div>
-      <!-- ESRB Rating -->
-      <div>
-        <label for="esrb" class="block text-sm font-medium">ESRB Rating</label>
-        <select
-          id="esrb"
-          [(ngModel)]="game.Game_ESRB_Rating"
-          name="esrb"
-          class="w-full px-4 py-2 border rounded-lg"
-        >
-          <option *ngFor="let rating of esrbRatings" [value]="rating" [selected]="game.Game_ESRB_Rating === rating">
-            {{ rating }}
-          </option>
-        </select>
-      </div>
-      <!-- Marca -->
-      <div>
-        <label for="brand" class="block text-sm font-medium">Brand</label>
-        <select
-          id="brand"
-          [(ngModel)]="game.Brand"
-          name="brand"
-          class="w-full px-4 py-2 border rounded-lg"
-        >
-          <option *ngFor="let brand of brands" [value]="brand" [selected]="game.Brand === brand">
-            {{ brand }}
-          </option>
-        </select>
-      </div>
-      <!-- Descuento -->
-      <div>
-        <label for="discount" class="block text-sm font-medium">Discount</label>
-        <input
-          id="discount"
-          type="number"
-          [(ngModel)]="game.Discount"
-          name="discount"
-          class="w-full px-4 py-2 border rounded-lg"
-        />
-      </div>
-    </div>
-    <div class="mt-6 flex justify-end space-x-4">
+  <!-- Header -->
+  <div class="mb-6 text-center">
+    <h2 class="text-3xl font-bold text-blue-600 mb-2">Edit Game</h2>
+    <p class="text-gray-600">Easily update game information with a clean layout</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="bg-white shadow-md rounded-lg">
+    <div class="flex border-b text-gray-600">
       <button
-        type="button"
-        class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-        (click)="borrarJuego()"
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'main'}"
+        (click)="setActiveTab('main')"
       >
-        Delete
+        Main Info
       </button>
       <button
-        type="submit"
-        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'media'}"
+        (click)="setActiveTab('media')"
       >
-        Save Changes
+        Media & Rating
+      </button>
+      <button
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'categories'}"
+        (click)="setActiveTab('categories')"
+      >
+        Categories
+      </button>
+      <button
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'platforms'}"
+        (click)="setActiveTab('platforms')"
+      >
+        Platforms
+      </button>
+      <button
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'screenshots'}"
+        (click)="setActiveTab('screenshots')"
+      >
+        Screenshots
       </button>
     </div>
-  </form>
+
+    <!-- Tab Content -->
+    <div class="p-6">
+      <!-- Main Info -->
+      <div *ngIf="activeTab === 'main'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Name -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            id="name"
+            type="text"
+            [(ngModel)]="game.Game_Name"
+            name="name"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <!-- Price -->
+        <div>
+          <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+          <input
+            id="price"
+            type="number"
+            [(ngModel)]="game.Game_Price"
+            name="price"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <!-- Description -->
+        <div class="md:col-span-2">
+          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea
+            id="description"
+            [(ngModel)]="game.Game_Description"
+            name="description"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows="10"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Media & Rating -->
+      <div *ngIf="activeTab === 'media'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Background Image -->
+        <div>
+          <label for="backgroundImage" class="block text-sm font-medium text-gray-700">Background Image</label>
+          <input
+            id="backgroundImage"
+            type="text"
+            [(ngModel)]="game.Game_Background_Image"
+            [ngModelOptions]="{standalone: true}"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <!-- ESRB Rating -->
+        <div>
+          <label for="esrb" class="block text-sm font-medium text-gray-700">ESRB Rating</label>
+          <input
+            id="esrb"
+            type="text"
+            [(ngModel)]="game.Game_ESRB_Rating"
+            [ngModelOptions]="{standalone: true}"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <!-- Discount -->
+        <div>
+          <label for="discount" class="block text-sm font-medium text-gray-700">Discount</label>
+          <input
+            id="discount"
+            type="number"
+            [(ngModel)]="game.Discount"
+            name="discount"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div *ngIf="activeTab === 'categories'" class="grid grid-cols-1 gap-4">
+        <div *ngFor="let category of game.Game_Category; let i = index; trackBy: trackByIndex" class="flex items-center">
+          <input
+            type="text"
+            [(ngModel)]="game.Game_Category[i]"
+            name="Game_Category_{{ i }}"
+            class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            (click)="removeItem('Game_Category', i)"
+            class="ml-2 p-2 text-white bg-red-500 rounded-lg hover:bg-red-600 flex items-center justify-center"
+            style="width: 2.5rem; height: 2.5rem;" 
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 41 41"
+              fill="currentColor"
+              class="h-5 w-5"
+              width="800px" height="800px"
+            >
+              <path
+              d="M36.335,5.668h-8.167V1.5c0-0.828-0.672-1.5-1.5-1.5h-12c-0.828,0-1.5,0.672-1.5,1.5v4.168H5.001c-1.104,0-2,0.896-2,2
+              s0.896,2,2,2h2.001v29.168c0,1.381,1.119,2.5,2.5,2.5h22.332c1.381,0,2.5-1.119,2.5-2.5V9.668h2.001c1.104,0,2-0.896,2-2
+              S37.438,5.668,36.335,5.668z M14.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5
+              s1.5,0.672,1.5,1.5V35.67z M22.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5
+              s1.5,0.672,1.5,1.5V35.67z M25.168,5.668h-9V3h9V5.668z M30.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21
+              c0-0.828,0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5V35.67z"/>
+              />
+            </svg>
+          </button>
+
+        </div>
+        <button
+          type="button"
+          (click)="addItem('Game_Category')"
+          class="flex items-center justify-center gap-2 px-4 py-2 text-white bg-green-500 rounded-full shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          Add
+        </button> 
+      </div>
+
+      <!-- Platforms -->
+      <div *ngIf="activeTab === 'platforms'" class="grid grid-cols-1 gap-4">
+        <div *ngFor="let platform of game.Game_Platform; let i = index; trackBy: trackByIndex" class="flex items-center">
+          <input
+            type="text"
+            [(ngModel)]="game.Game_Platform[i]"
+            name="Game_Platform_{{ i }}"
+            class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            (click)="removeItem('Game_Platform', i)"
+            class="ml-2 p-2 text-white bg-red-500 rounded-lg hover:bg-red-600 flex items-center justify-center"
+            style="width: 2.5rem; height: 2.5rem;" 
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 41 41"
+              fill="currentColor"
+              class="h-5 w-5"
+              width="800px" height="800px"
+            >
+              <path
+              d="M36.335,5.668h-8.167V1.5c0-0.828-0.672-1.5-1.5-1.5h-12c-0.828,0-1.5,0.672-1.5,1.5v4.168H5.001c-1.104,0-2,0.896-2,2
+              s0.896,2,2,2h2.001v29.168c0,1.381,1.119,2.5,2.5,2.5h22.332c1.381,0,2.5-1.119,2.5-2.5V9.668h2.001c1.104,0,2-0.896,2-2
+              S37.438,5.668,36.335,5.668z M14.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5
+              s1.5,0.672,1.5,1.5V35.67z M22.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5
+              s1.5,0.672,1.5,1.5V35.67z M25.168,5.668h-9V3h9V5.668z M30.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21
+              c0-0.828,0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5V35.67z"/>
+              />
+            </svg>
+          </button>
+
+        </div>
+        <button
+          type="button"
+          (click)="addItem('Game_Platform')"
+          class="flex items-center justify-center gap-2 px-4 py-2 text-white bg-green-500 rounded-full shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          Add
+        </button> 
+      </div>
+
+      <!-- Screenshots -->
+      <div *ngIf="activeTab === 'screenshots'" class="grid grid-cols-1 gap-4">
+        <div *ngFor="let screenshot of game.Game_Short_Screenshots; let i = index; trackBy: trackByIndex" class="flex items-center">
+          <input
+            type="text"
+            [(ngModel)]="game.Game_Short_Screenshots[i]"
+            name="Game_Short_Screenshots_{{ i }}"
+            class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            (click)="removeItem('Game_Short_Screenshots', i)"
+            class="ml-2 p-2 text-white bg-red-500 rounded-lg hover:bg-red-600 flex items-center justify-center"
+            style="width: 2.5rem; height: 2.5rem;" 
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 41 41"
+              fill="currentColor"
+              class="h-5 w-5"
+              width="800px" height="800px"
+            >
+              <path
+              d="M36.335,5.668h-8.167V1.5c0-0.828-0.672-1.5-1.5-1.5h-12c-0.828,0-1.5,0.672-1.5,1.5v4.168H5.001c-1.104,0-2,0.896-2,2
+              s0.896,2,2,2h2.001v29.168c0,1.381,1.119,2.5,2.5,2.5h22.332c1.381,0,2.5-1.119,2.5-2.5V9.668h2.001c1.104,0,2-0.896,2-2
+              S37.438,5.668,36.335,5.668z M14.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5
+              s1.5,0.672,1.5,1.5V35.67z M22.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21c0-0.828,0.672-1.5,1.5-1.5
+              s1.5,0.672,1.5,1.5V35.67z M25.168,5.668h-9V3h9V5.668z M30.168,35.67c0,0.828-0.672,1.5-1.5,1.5s-1.5-0.672-1.5-1.5v-21
+              c0-0.828,0.672-1.5,1.5-1.5s1.5,0.672,1.5,1.5V35.67z"/>
+              />
+            </svg>
+          </button>
+
+        </div>
+        <button
+          type="button"
+          (click)="addItem('Game_Short_Screenshots')"
+          class="flex items-center justify-center gap-2 px-4 py-2 text-white bg-green-500 rounded-full shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          Add
+        </button>    
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="mt-6 flex justify-end space-x-4">
+    <button
+      type="button"
+      class="px-6 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
+      (click)="borrarJuego()"
+    >
+      Delete
+    </button>
+    <button
+      type="submit"
+      class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+      (click)="guardarCambios()"
+    >
+      Save Changes
+    </button>
+  </div>
 </div>
