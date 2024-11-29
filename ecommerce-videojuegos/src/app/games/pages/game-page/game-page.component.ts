@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { ReviewsComponent } from "../../components/reviews/reviews.component";
 import { GameCardComponent } from "../../components/game-card/game-card.component";
 import  { CostarricanPricePipe } from '../../pipes/costarrican-price.pipe';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-game-page',
   standalone: true,
@@ -17,7 +18,8 @@ import  { CostarricanPricePipe } from '../../pipes/costarrican-price.pipe';
     ImageCarouselComponent, 
     ReviewsComponent, 
     GameCardComponent, 
-    CostarricanPricePipe
+    CostarricanPricePipe,
+    FormsModule
   ],
   templateUrl: './game-page.component.html',
   styleUrl: '../../../app.component.scss',
@@ -26,6 +28,7 @@ export class GamePageComponent {
   public game!: Game;
   public descript : string = "";
   public rating = 5;
+  public isUserRegistered = false;
 
   public userReviews =  [
     ["Mario Meyers", "Loved the game! The graphics and gameplay are amazing."],
@@ -53,7 +56,7 @@ export class GamePageComponent {
     private userService: UserService,
   ){}
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.activeRoute.params.subscribe(({id})=>{
       this.gameService.getGameById(id)
       .subscribe(game=>{
@@ -66,8 +69,31 @@ export class GamePageComponent {
         this.gameService.getGamesByCategory('Action').subscribe((games) => {
           this.similarGames = games;
         });
+        //TODO get comentarios y reviews
+
       })
     })
+
+    const userId = localStorage.getItem('user')?.replace(/"/g, '');
+    if(userId){
+      this.isUserRegistered = true;
+    }
+    else{
+      this.isUserRegistered = false;
+    }
+
+  }
+
+  onSubmit() {
+    const data = {
+      comment: this.user_comment,
+      rating: this.user_rating,
+    };
+    //TODO funcion anadir comentario de un juego
+    //gameService.addGameReview(userId, comment, rating).suscribe()
+
+    console.log('Submitted data:', data);
+    alert(`Comment: ${this.user_comment}\nRating: ${this.user_rating}`);
   }
 
   addToCart(game: Game) {
@@ -88,6 +114,19 @@ export class GamePageComponent {
     }else{
       this.userService.addToWishlist(userID.toString().replace(/"/g, ''), game._id).subscribe( )
     }
+  }
+
+  user_comment: string = '';
+  user_rating: number = 0;
+  user_hover: number = 0;
+  user_stars = [1, 2, 3, 4, 5];
+
+  selectRating(star: number) {
+    this.user_rating = star;
+  }
+
+  hoverRating(star: number) {
+    this.user_hover = star;
   }
 
 }

@@ -83,12 +83,14 @@ export class GameShoppingCardComponent {
 
   increaseQuantity(){
     this.quantity++;
+    //TODO añadir servicio
     this.updateTotal()
   }
 
   decreaseQuantity(){
     if(this.quantity>1){
       this.quantity--;
+      //TODO añadir servicio
     }
     this.updateTotal()
   }
