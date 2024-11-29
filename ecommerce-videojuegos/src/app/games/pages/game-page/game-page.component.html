@@ -82,7 +82,7 @@
 
 <div class="grid grid-cols-1 md:grid-cols-[2fr_2fr] gap-7 text-center ">
     <div class="text-blue font-bold text-3xl items-center justify-center"> OVERALL CUSTOMER RATING
-        <div class="price-col p-8 mt-8 xl:mt-24 flex flex-col items-center justify-center text-center ">
+        <div class="price-col p-4 mt-8 xl:mt-24 flex flex-col items-center justify-center text-center ">
             <div id="rating" class="flex items-center">
                 <span *ngFor="let i of [0, 1, 2, 3, 4]" class="relative">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20"
@@ -94,6 +94,54 @@
             <div class="flex justify-center ">
                 <h1 class="text-3xl font-bold text-blue"> {{rating}} out of 5</h1> 
             </div>
+        </div>
+        <div *ngIf="isUserRegistered">
+            <div class="max-w-lg mx-auto bg-white p-4 rounded-lg shadow-md mt-5">
+                <h2 class="text-lg font-semibold mb-4">Write a Comment</h2>
+              
+                <form (ngSubmit)="onSubmit()" #commentForm="ngForm">
+                  <!-- Comment Box -->
+                  <div class="mb-4">
+                    <label for="comment" class="block text-gray-700 font-medium mb-2">Comment</label>
+                    <textarea
+                      id="comment"
+                      [(ngModel)]="user_comment"
+                      name="comment"
+                      rows=""
+                      required
+                      class="max-w-lg w-full border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring focus:ring-blue-500"
+                      placeholder="Write your comment here..."
+                    ></textarea>
+                  </div>
+              
+                  <!-- Star Rating -->
+                  <div class="mb-4 ">
+                    <label class="block text-gray-700 font-medium mb-2">Rating</label>
+                    <div class="flex  text-center justify-center space-x-2">
+                      <span
+                        *ngFor="let star of user_stars; let i = index"
+                        (click)="selectRating(i + 1)"
+                        (mouseover)="hoverRating(i + 1)"
+                        (mouseleave)="hoverRating(0)"
+                        class="cursor-pointer text-2xl"
+                        [class.text-yellow-500]="i < user_rating || i < user_hover"
+                        [class.text-gray-400]="i >= user_rating && i >= user_hover"
+                      >
+                        ★
+                      </span>
+                    </div>
+                  </div>
+              
+                  <!-- Submit Button -->
+                  <button
+                    type="submit"
+                    [disabled]="!commentForm.valid"
+                    class="w-full mt-4 bg-blue dark:bg-white text-white text-base dark:text-black font-medium py-2 rounded-lg hover:bg-blue-700 transition"
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
         </div>
     </div>
 

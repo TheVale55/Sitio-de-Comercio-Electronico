@@ -1,6 +1,19 @@
 <!--SHOPPING CART -->
 <section class="py-8 antialiased dark:bg-gray-900 md:py-16" *ngIf="isCartVisible">
-    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0 text-center" *ngIf="isCartEmpty">
+        <h2 class="text-5xl text-center font-bold dark:text-white pb-5">Shopping Cart</h2>
+        No items added to cart
+        <div class="flex items-center justify-center gap-2">
+          <a href="/games/list" title="" class="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-white">
+              Continue Shopping
+              <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
+              </svg>
+          </a>
+          </div>
+    </div>
+    <div *ngIf="!isCartEmpty">
+      <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <h2 class="text-5xl text-center font-bold dark:text-white">Shopping Cart</h2>
     
         <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
@@ -84,6 +97,8 @@
             </div>
         </div>
     </div>
+    </div>
+    
 </section>
 
 

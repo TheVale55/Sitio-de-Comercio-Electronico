@@ -10,6 +10,7 @@ import { ProvinciasService } from '../../../auth/services/provincias.service';
 import { PaymentService } from '../../../auth/services/payment.service';
 import { forkJoin } from 'rxjs';
 import { GamesService } from '../../services/games.service';
+import mongoose from 'mongoose';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -33,6 +34,7 @@ export class ShoppingCartComponent {
   isSummaryVisible: boolean = false;
   isShippingVisible: boolean = false;
   isPaymentVisible: boolean = false;
+  isCartEmpty: boolean = false;
 
 
   constructor(
@@ -53,6 +55,11 @@ export class ShoppingCartComponent {
       this.userService.cart(this.userId).subscribe(
         (cart) => {
           this.shoppingCart = cart; 
+          if(this.shoppingCart.length===0)
+            this.isCartEmpty=true;
+          else{
+            this.isCartEmpty=false;
+          }
         }
       )
     }
@@ -69,7 +76,7 @@ export class ShoppingCartComponent {
     console.log(User_ID, Games, Purchase_Address, Order_Status, Total_Amount, createdAt);
 
     const payment: Payment = {
-      _id: User_ID+createdAt,
+      _id:  new mongoose.Types.ObjectId().toString(),
       User_ID,
       Games,
       Purchase_Address,
@@ -100,6 +107,7 @@ export class ShoppingCartComponent {
     },
     (err) => {
         alert("Error in the purchase process")
+        console.log(err)
     }
   );
 }
@@ -119,7 +127,7 @@ export class ShoppingCartComponent {
     for (let index in this.totalPrices) {
       this.total += this.totalPrices[index];
     }
-    this.subtotal = this.total;
+    this.subtotal = this.roundToDecimal(this.total,2);
     this.total = this.total + this.shipping;
     this.total = this.roundToDecimal(this.total, 2);
     this.tax = this.roundToDecimal(this.total*0.13, 2);
