@@ -9,6 +9,8 @@ import { LandPageComponent } from './shared/pages/land-page/land-page.component'
 import { ShoppingCartComponent } from './games/pages/shopping-cart/shopping-cart.component';
 import { GameEditComponent } from './games/pages/game-edit/game-edit.component';
 import { WishilistComponent } from './games/pages/wishilist/wishilist.component';
+import { GameAddComponent } from './games/pages/game-add/game-add.component';
+import { DashboardComponent } from './games/pages/dashboard/dashboard.component';
 
 
 export const routes: Routes = [
@@ -28,8 +30,16 @@ export const routes: Routes = [
        
         ]
     },
-    { path: 'admin/edit-game/:id', 
-      component: GameEditComponent 
+    {   path: 'admin/edit-game/:id', 
+        component: GameEditComponent 
+    },
+    {   path: 'admin/add-game',
+        component: GameAddComponent
+
+    },
+    {
+        path: 'admin/dashboard',
+        component: DashboardComponent
     },
     {
         path: 'login', // Mover esta ruta antes de los comodines
