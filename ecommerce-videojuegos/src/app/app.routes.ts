@@ -26,11 +26,11 @@ export const routes: Routes = [
           { path: 'list', component: GameListComponent }, // Lista de juegos
           { path: 'cart', component: ShoppingCartComponent }, // Carrito de compras
           { path: 'wishlist', component: WishilistComponent }, // Lista de deseos
-          { path: ':id', component: GamePageComponent }, // Detalle del juego
           { path: 'add-game', component: GameAddComponent }, // Añadir juegos
           { path: 'user-profile/:id', component: UserProfileComponent }, // Perfil del usuario
           { path: 'edit-game/:id', component: GameEditComponent }, // Editar juegos
           { path: 'dashboard', component: DashboardComponent }, // Dashboard con navbar
+          { path: ':id', component: GamePageComponent }, // Detalle del juego
           { path: '**', redirectTo: 'list' } // Redirección a lista si no se encuentra la ruta
         ]
     },

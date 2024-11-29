@@ -103,10 +103,8 @@ export class ShoppingCartComponent {
     (err) => {
         alert("Error in the purchase process")
     }
-);
-  }
-
-
+  );
+}
   onTotalPriceChange(newTotal: number, gamePosition: number) {
     this.totalPrices[gamePosition] = newTotal;
     this.updateTotal();

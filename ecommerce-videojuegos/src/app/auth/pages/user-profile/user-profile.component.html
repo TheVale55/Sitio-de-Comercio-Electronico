@@ -79,20 +79,22 @@
           <p>No orders found.</p>
         </div>
 
-        <div *ngIf="!loadingOrders && orders.length > 0">
+        <div *ngIf="!loadingOrders && payments.length > 0">
           <table class="table-auto w-full mt-4 border-collapse border border-gray-300">
             <thead>
               <tr>
                 <th class="border border-gray-300 px-4 py-2">Order ID</th>
                 <th class="border border-gray-300 px-4 py-2">Date</th>
                 <th class="border border-gray-300 px-4 py-2">Status</th>
+                <th class="border border-gray-300 px-4 py-2">Total</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let order of orders">
-                <td class="border border-gray-300 px-4 py-2">{{ order }}</td>
-                <!-- <td class="border border-gray-300 px-4 py-2">{{ order.date }}</td>
-                <td class="border border-gray-300 px-4 py-2">{{ order.status }}</td> -->
+              <tr *ngFor="let payment of payments">
+                <td class="border border-gray-300 px-4 py-2">{{ payment._id }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ payment.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ payment.Order_Status }}</td>
+                <td class="border border-gray-300 px-4 py-2">${{ payment.Total_Amount }}</td>
               </tr>
             </tbody>
           </table>

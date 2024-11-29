@@ -9,4 +9,8 @@ router.post('/', paymentController.createPayment);       // Crear un nuevo pago
 router.put('/:id', paymentController.updatePayment);     // Actualizar un pago por ID
 router.delete('/:id', paymentController.deletePayment);  // Eliminar un pago por ID
 
+router.get('/top-selling-products', paymentController.getTopSellingProducts);
+//router.get('/active-users-by-day', paymentController.getActiveUsersByDay);
+//router.get('/orders-by-day', paymentController.getOrdersByDay);
+
 module.exports = router;

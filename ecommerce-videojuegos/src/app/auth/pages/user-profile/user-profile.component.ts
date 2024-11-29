@@ -24,6 +24,8 @@ export class UserProfileComponent implements OnInit {
   loadingUser: boolean = true;
   loadingOrders: boolean = true;
   errorMessage: string = '';
+  payments: any[] = [];
+  date: string = ''
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +61,13 @@ export class UserProfileComponent implements OnInit {
         });
         this.loadingUser = false;
         this.orders = user.purchaseHistory;
+        this.orders.forEach((order) => {
+          this.paymentService.getPaymentByID(order).subscribe((payment) => {
+            this.payments.push(payment);
+            console.log(payment)
+          });
+        })
+        
       },
       (error) => {
         this.errorMessage = 'No se pudo cargar la información del usuario.';
@@ -67,6 +76,18 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  formatDate(date: string): string {
+    const options: Intl.DateTimeFormatOptions = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    };
+    return new Date(date).toLocaleDateString('en-GB', options).replace(',', '');
+  }
   // Guardar cambios en los datos del usuario
   saveChanges() {
     if (this.userForm.invalid) return;

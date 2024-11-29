@@ -66,10 +66,41 @@ const deletePayment = async (req, res) => {
   }
 };
 
+
+const getTopSellingProducts = async (req, res) => {
+  try {
+    const topSellingProducts = await Payment.aggregate([
+      {
+        $unwind: '$Games',
+      },
+      {
+        $group: {
+          _id: '$Games',
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { count: -1 },
+      },
+      {
+        $limit: 5,
+      },
+    ]);	
+    res.status(200).json(topSellingProducts);
+  }catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+
 module.exports = {
   getAllPayments,
   getPaymentById,
   createPayment,
   updatePayment,
-  deletePayment
+  deletePayment,
+  getTopSellingProducts,
+  //getActiveUsersByDay,
+  //getOrdersByDay,
 };
