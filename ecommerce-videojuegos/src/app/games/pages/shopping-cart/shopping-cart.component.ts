@@ -7,6 +7,9 @@ import { UserService } from '../../../auth/services/user.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProvinciasService } from '../../../auth/services/provincias.service';
+import { PaymentService } from '../../../auth/services/payment.service';
+import { forkJoin } from 'rxjs';
+import { GamesService } from '../../services/games.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -36,6 +39,8 @@ export class ShoppingCartComponent {
     private route: Router,
     private userService: UserService,
     public provinciaService: ProvinciasService,
+    public paymentService: PaymentService,
+    public gameService : GamesService,
   ){}
 
   ngOnInit(): void {
@@ -65,9 +70,40 @@ export class ShoppingCartComponent {
     const createdAt: Date = new Date();
     console.log(User_ID, Games, Purchase_Address, Order_Status, Total_Amount, createdAt);
 
-    // TODO ANADIR SERVICIO PARA CREAR EL PAYMENT
-    // TODO DIRIGIR AL CLIENTE A LA PAGINA DE PEDIDOS
-    // TODO VACIAR CARRITO DEL CLIENTE 
+    const payment: Payment = {
+      id: User_ID+createdAt,
+      User_ID,
+      Games,
+      Purchase_Address,
+      Order_Status,
+      Total_Amount,
+      createdAt
+  };
+
+  this.paymentService.addPayment(payment).subscribe({
+    next: (response) => {
+        console.log('Payment successfully created:', response);
+        this.route.navigate(['/games']);
+        
+        const deleteRequests = this.shoppingCart.map((gameID) =>
+            this.userService.removeFromCart(this.userId, gameID)
+        );
+        // Execute all delete requests in parallel
+        forkJoin(deleteRequests).subscribe({
+            next: (responses) => {
+                console.log('All games removed from cart:', responses);
+                this.shoppingCart = []; // Clear the cart array locally
+            },
+            error: (err) => {
+                console.error('Error removing items from cart:', err);
+            }
+        });
+        alert("Succesfully purchased order")
+    },
+    error: (err) => {
+        alert("Error in the purchase process")
+    }
+});
   }
 
 
