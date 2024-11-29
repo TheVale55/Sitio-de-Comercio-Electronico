@@ -80,8 +80,8 @@ export class ShoppingCartComponent {
       createdAt
   };
 
-  this.paymentService.addPayment(payment).subscribe({
-    next: (response) => {
+  this.paymentService.addPayment(payment).subscribe(
+    (response) => {
         console.log('Payment successfully created:', response);
         this.route.navigate(['/games']);
         
@@ -100,10 +100,10 @@ export class ShoppingCartComponent {
         });
         alert("Succesfully purchased order")
     },
-    error: (err) => {
+    (err) => {
         alert("Error in the purchase process")
     }
-});
+);
   }
 
 
