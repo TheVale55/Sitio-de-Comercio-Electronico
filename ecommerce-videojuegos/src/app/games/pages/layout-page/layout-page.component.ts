@@ -80,6 +80,12 @@ export class LayoutPageComponent {
     this.router.navigate(['/games/wishlist']); // Ruta correcta para wishlist
   }
 
+  viewUsers() {
+    console.log('Redirigiendo a la página de usuarios...');
+    this.isDropdownOpen = false;
+    this.router.navigate(['/games/users']); // Ruta correcta para usuarios
+  }
+
   orders() {
     console.log('Redirigiendo a la página de pedidos...');
     this.isDropdownOpen = false;
