@@ -17,7 +17,6 @@ import { ProvinciasService } from '../../../auth/services/provincias.service';
 })
 export class ShoppingCartComponent {
   public userId !: string;
-  //TODO BRAYTON remove these strings to try out service
   public shoppingCart: string[] = [];
   public totalPrices: number[] = [0,0];
   public total = 0;

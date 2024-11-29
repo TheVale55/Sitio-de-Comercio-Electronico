@@ -34,10 +34,25 @@ export class GameWishlistCardComponent {
   }
 
   addToCart(){
-    this.userService.addToCart(this.userId, this.gameId);
+    this.userService.addToCart(this.userId, this.gameId).subscribe(
+      (response) => {
+        console.log('Item added to cart', response);
+      },
+      (error) => {
+          alert("Could not add item to cart");
+      }
+    )
   }
 
   removeFromWishlist(){
-    this.userService.removeFromWishlist(this.userId, this.gameId);
+    this.userService.removeFromWishlist(this.userId, this.gameId).subscribe(
+      (response) => {
+        console.log('Item removed from wishlist', response);
+        window.location.reload();
+      },
+      (error) => {
+          alert("Could not remove item from wishlist");
+      }
+    )
   }
 }

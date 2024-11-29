@@ -48,7 +48,9 @@ export class UserService {
     return this.http.get<any>(`${this.baseUrl}/api/users/${userID}/history`)
   }
   wishlist(userID: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/api/users/${userID}/wishlist`)
+    return this.http.get<{ wishlist: string[] }>(`${this.baseUrl}/api/users/${userID}/wishlist`).pipe(
+      map(response => response.wishlist)
+  );
   }
   updateUser(userID: string, user: User): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/api/users/${userID}`, user)

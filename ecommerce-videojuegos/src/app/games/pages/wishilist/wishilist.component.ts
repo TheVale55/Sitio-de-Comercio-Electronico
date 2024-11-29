@@ -27,12 +27,9 @@ export class WishilistComponent {
       return;
     }else{
       this.userId = userID.toString().replace(/"/g, '');
-      //TODO change userService.cart TO userService.wishlist cuando exista
-      this.userService.cart(this.userId).subscribe(
+      this.userService.wishlist(this.userId).subscribe(
         (cart) => {
           this.wishlist = cart; 
-          console.log("whishlist es")
-          console.log(cart);
         }
       )
     }
