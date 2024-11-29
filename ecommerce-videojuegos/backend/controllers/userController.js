@@ -40,11 +40,11 @@ const createUser = async (req, res) => {
 
 // Actualizar un usuario
 const updateUser = async (req, res) => {
+  const { email, username, password } = req.body;
   try {
     const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const newPassword = await bcrypt.hash(password, salt);
+    const updatedUser  = await User.findByIdAndUpdate(req.params.id, { email, username, password: newPassword }, { new: true });
     if (!updatedUser) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
