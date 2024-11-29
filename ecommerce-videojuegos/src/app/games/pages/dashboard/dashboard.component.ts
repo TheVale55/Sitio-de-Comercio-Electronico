@@ -1,3 +1,4 @@
+import { GamesService } from './../../services/games.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { CommonModule } from '@angular/common';
@@ -11,8 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class DashboardComponent implements OnInit {
   activeTab: string = 'topProducts'; // Tab activa por defecto
-
-  constructor() {
+  
+  constructor(private gameService: GamesService) {
     Chart.register(...registerables); // Registra los componentes de Chart.js
   }
 
@@ -129,5 +130,9 @@ export class DashboardComponent implements OnInit {
         },
       },
     });
+  }
+
+  setSales(): void {
+    this.gameService.setSales().subscribe();
   }
 }

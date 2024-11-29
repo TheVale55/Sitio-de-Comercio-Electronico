@@ -89,6 +89,17 @@
             </select>
           </div>
 
+          <!-- Trending Filter -->
+           <div>
+            <label class="block text-sm font-medium mb-1">Trending</label>
+            <select [(ngModel)]="filters.popularity" class="w-full border rounded px-3 py-2">
+              <option value="">All</option>
+              <option *ngFor="let trending of [true, false]" [value]="trending">
+                {{ trending ? 'Trending' : 'Not Trending' }}
+              </option>
+            </select>
+            </div>
+
           <!-- Apply Filter Button -->
           <button class="w-full mt-4 bg-blue text-white py-2 px-4 rounded hover:bg-blue-600" (click)="applyFilters()">
             Apply Filters

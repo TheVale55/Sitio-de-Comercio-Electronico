@@ -23,17 +23,20 @@ export class LandPageComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.gameService.getGames("", "", "playstation","","","").subscribe(games => {
+    this.gameService.getGames("", "", "playstation","","","",false).subscribe(games => {
       this.playGames = games
     })
-    this.gameService.getGames("", "", "xbox","","","").subscribe(games => {
+    this.gameService.getGames("", "", "xbox","","","",false).subscribe(games => {
       this.xboxGames = games
     })
-    this.gameService.getGames("", "", "pc","","","").subscribe(games => {
+    this.gameService.getGames("", "", "pc","","","",false).subscribe(games => {
       this.pcGames = games
     })
-    this.gameService.getGames("", "", "nintendo","","","").subscribe(games => {
+    this.gameService.getGames("", "", "nintendo","","","",false).subscribe(games => {
       this.nintendoGames = games
+    })
+    this.gameService.getSaleGames().subscribe(games => {
+      this.saleGames = games
     })
   }
 

@@ -69,26 +69,82 @@ const deletePayment = async (req, res) => {
 
 const getTopSellingProducts = async (req, res) => {
   try {
-    const topSellingProducts = await Payment.aggregate([
-      {
-        $unwind: '$Games',
-      },
+    const topProducts = await Payment.aggregate([
+      { $unwind: "$Games" }, // Desglosar cada juego de la lista
       {
         $group: {
-          _id: '$Games',
-          count: { $sum: 1 },
+          _id: "$Games",
+          totalSold: { $sum: 1 },
         },
       },
       {
-        $sort: { count: -1 },
+        $lookup: {
+          from: "games", // Colección de juegos
+          localField: "_id",
+          foreignField: "_id",
+          as: "gameDetails",
+        },
+      },
+      { $unwind: "$gameDetails" },
+      {
+        $project: {
+          _id: 0,
+          gameId: "$_id",
+          name: "$gameDetails.Game_Name",
+          totalSold: 1,
+        },
+      },
+      { $sort: { totalSold: -1 } },
+      { $limit: 10 }, // Limitar a los 10 más vendidos
+    ]);
+
+    res.status(200).json(topProducts);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener los productos más vendidos", error });
+  }
+};
+
+
+
+const getActiveUsersByDay = async (req, res) => {
+  try {
+    const activeUsers = await User.aggregate([
+      {
+        $match: { IsActive: true }, // Solo usuarios activos
       },
       {
-        $limit: 5,
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$updatedAt" } },
+          totalUsers: { $sum: 1 },
+        },
       },
-    ]);	
-    res.status(200).json(topSellingProducts);
-  }catch (err) {
-    res.status(500).json({ message: err.message });
+      { $sort: { _id: 1 } }, // Ordenar por fecha
+    ]);
+
+    res.status(200).json(activeUsers);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener usuarios activos por día", error });
+  }
+};
+
+
+
+const getOrdersByDay = async (req, res) => {
+  try {
+    const ordersByDay = await Payment.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          totalOrders: { $sum: 1 },
+          totalAmount: { $sum: "$Total_Amount" },
+        },
+      },
+      { $sort: { _id: 1 } }, // Ordenar por fecha
+    ]);
+
+    res.status(200).json(ordersByDay);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener pedidos por día", error });
   }
 };
 
@@ -101,6 +157,6 @@ module.exports = {
   updatePayment,
   deletePayment,
   getTopSellingProducts,
-  //getActiveUsersByDay,
-  //getOrdersByDay,
+  getActiveUsersByDay,
+  getOrdersByDay,
 };
