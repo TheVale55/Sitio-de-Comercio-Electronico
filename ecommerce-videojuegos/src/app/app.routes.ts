@@ -11,6 +11,7 @@ import { GameEditComponent } from './games/pages/game-edit/game-edit.component';
 import { WishilistComponent } from './games/pages/wishilist/wishilist.component';
 import { GameAddComponent } from './games/pages/game-add/game-add.component';
 import { DashboardComponent } from './games/pages/dashboard/dashboard.component';
+import { UserProfileComponent } from './auth/pages/user-profile/user-profile.component';
 
 
 export const routes: Routes = [
@@ -40,6 +41,10 @@ export const routes: Routes = [
     {
         path: 'admin/dashboard',
         component: DashboardComponent
+    },
+    {
+        path: 'user-profile/:id',
+        component: UserProfileComponent
     },
     {
         path: 'login', // Mover esta ruta antes de los comodines

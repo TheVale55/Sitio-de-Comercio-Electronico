@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { UserService } from '../../../auth/services/user.service';
+import { User } from '../../../auth/interfaces/user.interface';
 
 @Component({
   selector: 'app-layout-page',
@@ -15,6 +16,7 @@ export class LayoutPageComponent {
   isDropdownOpen: boolean = false;
   isAdmin: boolean = false; // Bandera para determinar si el usuario es administrador
   userName: string = ''; // Nombre del usuario
+
 
   constructor(private router: Router, private eRef: ElementRef, private userService: UserService) {
     // Verifica el estado de autenticación
@@ -51,11 +53,17 @@ export class LayoutPageComponent {
     this.router.navigate(['/']);
   }
 
-  profile() {
-    console.log('Redirigiendo a la página de perfil...');
-    this.isDropdownOpen = false;
-    this.router.navigate(['/profile']); // Asegúrate de que esta ruta exista
+  profile(): void {
+    const userId = localStorage.getItem('user')?.replace(/"/g, ''); // Obtén el ID del usuario eliminando comillas innecesarias
+    if (userId) {
+      console.log(`Redirigiendo al perfil del usuario con ID: ${userId}`);
+      this.isDropdownOpen = false; // Cierra el dropdown
+      this.router.navigate([`/user-profile/${userId}`]); // Redirige a la ruta con el ID
+    } else {
+      console.error('No se encontró un ID de usuario en el almacenamiento local.');
+    }
   }
+  
 
   cart() {
     console.log('Redirigiendo a la página de carrito...');

@@ -1,0 +1,103 @@
+<div class="container mx-auto p-6">
+  <!-- Header -->
+  <div class="mb-6 text-center">
+    <h2 class="text-3xl font-bold text-blue-600 mb-2">User Profile</h2>
+    <p class="text-gray-600">Manage your account details and review your order history</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="bg-white shadow-md rounded-lg">
+    <div class="flex border-b text-gray-600">
+      <button
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'profile'}"
+        (click)="switchTab('profile')"
+      >
+        Profile Details
+      </button>
+      <button
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'orders'}"
+        (click)="switchTab('orders')"
+      >
+        Order History
+      </button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="p-6">
+      <!-- Profile Details -->
+      <div *ngIf="activeTab === 'profile'" class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">Edit Your Profile</h2>
+
+        <form [formGroup]="userForm" (ngSubmit)="saveChanges()">
+          <!-- Username -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Username</label>
+            <input
+              type="text"
+              formControlName="username"
+              class="w-full px-4 py-2 border rounded-lg"
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Email</label>
+            <input
+              type="email"
+              formControlName="email"
+              class="w-full px-4 py-2 border rounded-lg"
+            />
+          </div>
+
+          <!-- Password -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2">Password</label>
+            <input
+              type="password"
+              formControlName="password"
+              class="w-full px-4 py-2 border rounded-lg"
+            />
+          </div>
+
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg">
+            Save Changes
+          </button>
+        </form>
+      </div>
+
+      <!-- Order History -->
+      <div *ngIf="activeTab === 'orders'">
+        <h2 class="text-xl font-semibold mb-4">Your Order History</h2>
+
+        <div *ngIf="loadingOrders" class="text-center">
+          <p>Loading order history...</p>
+        </div>
+
+        <div *ngIf="!loadingOrders && orders.length === 0" class="text-center">
+          <p>No orders found.</p>
+        </div>
+
+        <div *ngIf="!loadingOrders && orders.length > 0">
+          <table class="table-auto w-full mt-4 border-collapse border border-gray-300">
+            <thead>
+              <tr>
+                <th class="border border-gray-300 px-4 py-2">Order ID</th>
+                <th class="border border-gray-300 px-4 py-2">Date</th>
+                <th class="border border-gray-300 px-4 py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of orders">
+                <td class="border border-gray-300 px-4 py-2">{{ order.id }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ order.date }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ order.status }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
