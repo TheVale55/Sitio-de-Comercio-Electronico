@@ -53,5 +53,6 @@ export class OrdersComponent {
         console.log(msg)
       }
     )
+    window.location.reload();
   }
 }

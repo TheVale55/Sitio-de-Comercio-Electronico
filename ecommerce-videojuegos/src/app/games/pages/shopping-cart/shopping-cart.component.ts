@@ -69,7 +69,7 @@ export class ShoppingCartComponent {
     console.log(User_ID, Games, Purchase_Address, Order_Status, Total_Amount, createdAt);
 
     const payment: Payment = {
-      _id: User_ID+createdAt,
+      _id: User_ID,
       User_ID,
       Games,
       Purchase_Address,

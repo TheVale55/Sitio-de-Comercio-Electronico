@@ -3,7 +3,25 @@ const User = require('../models/user');
 // Obtener todos los pagos
 const getAllPayments = async (req, res) => {
   try {
-    const payments = await Payment.find();
+    const payments = await Payment.aggregate([
+      {
+        $addFields: {
+          statusOrder: {
+            $switch: {
+              branches: [
+                { case: { $eq: ["$Order_Status", "en preparación"] }, then: 1 },
+                { case: { $eq: ["$Order_Status", "enviado"] }, then: 2 },
+                { case: { $eq: ["$Order_Status", "entregado"] }, then: 3 },
+              ],
+              default: 4,
+            },
+          },
+        },
+      },
+      { $sort: { statusOrder: 1 } }, // Ordenar por el campo agregado
+      { $project: { statusOrder: 0 } }, // Eliminar el campo auxiliar
+    ]);
+    
     res.status(200).json(payments);
   } catch (err) {
     res.status(500).json({ message: err.message });
