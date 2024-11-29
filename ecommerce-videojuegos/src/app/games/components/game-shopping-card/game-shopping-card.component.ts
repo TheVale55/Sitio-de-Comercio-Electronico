@@ -15,9 +15,10 @@ import { Router } from '@angular/router';
 export class GameShoppingCardComponent {
   @Input()
   gameId : string = "";
+  @Input()
+  quantity! : number;
 
   game !: Game;
-  quantity:number=1;
   price : number = 0;
   @Output() total_price = new EventEmitter<number>();
 
@@ -84,6 +85,11 @@ export class GameShoppingCardComponent {
   increaseQuantity(){
     this.quantity++;
     //TODO añadir servicio
+    this.userService.updateCart(localStorage.getItem('user')?.toString().replace(/"/g, '')!, this.game._id, this.quantity).subscribe(
+      (response) => {
+        console.log('Item removed from cart:', response);
+      },
+    )
     this.updateTotal()
   }
 
@@ -91,6 +97,14 @@ export class GameShoppingCardComponent {
     if(this.quantity>1){
       this.quantity--;
       //TODO añadir servicio
+      this.userService.updateCart(localStorage.getItem('user')?.toString().replace(/"/g, '')!, this.game._id, this.quantity).subscribe(
+        (response) => {
+          console.log('Item removed from cart:', response);
+        },
+        (error) => {
+            console.error('Error removing item from cart:', error);
+        }
+      )
     }
     this.updateTotal()
   }

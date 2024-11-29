@@ -21,7 +21,8 @@
             <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
               <app-game-shopping-card
                   *ngFor="let game of shoppingCart; index as $index"
-                  [gameId]="game"
+                  [gameId]="game._id"
+                  [quantity]="game.quantity"
                   (total_price)="onTotalPriceChange($event, $index)"
               ></app-game-shopping-card>
           </div>
@@ -115,7 +116,7 @@
         <div class="space-y-4" >
         <div class="space-y-2" *ngFor="let game of shoppingCart; index as $index">
             <dl class="flex items-center justify-between gap-4">
-            <dt class="text-xl font-normal text-gray-500 dark:text-gray-400">{{game}}</dt>
+            <dt class="text-xl font-normal text-gray-500 dark:text-gray-400">{{game._id}}</dt>
             <dd class="text-xl font-medium text-gray-900 dark:text-white">${{totalPrices[$index]}}</dd>
             </dl>
         </div>  

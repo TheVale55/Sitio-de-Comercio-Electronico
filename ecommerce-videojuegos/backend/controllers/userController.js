@@ -79,8 +79,11 @@ const addToCart = async (req, res) => {
     if (!game) {
       return res.status(404).json({ message: 'Juego no encontrado' });
     }
-
-    user.shoppingCart.push(game);
+    const data = {
+      _id: game._id,
+      quantity: 1
+    }
+    user.shoppingCart.push(data);
     await user.save();
 
     res.status(200).json({ message: 'Juego agregado al carrito', user });
@@ -259,6 +262,30 @@ const getWishlist = async (req, res) => {
   }
 };
 
+const updateQuantity = async (req, res) => {
+  const { gameID, quantity } = req.query;
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    // Verificar que `shoppingCart` existe y contiene el `gameID`
+    const itemIndex = user.shoppingCart.findIndex(item => item._id.toString() === gameID);
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: 'Producto no encontrado en el carrito' });
+    }
+    // Actualizar la cantidad del producto
+    user.shoppingCart[itemIndex].quantity = parseInt(quantity, 10);
+
+    // Guardar el usuario con los cambios
+    await user.save();
+    await user.save();
+    res.status(200).json({ message: 'Cantidad actualizada en el carrito de compras', user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
@@ -275,5 +302,6 @@ module.exports = {
   getToken,
   getShoppingCart,
   getPurchaseHistory,
-  getWishlist
+  getWishlist,
+  updateQuantity
 };

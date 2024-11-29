@@ -9,6 +9,8 @@ router.post('/', userController.createUser);       // Crear un nuevo usuario
 router.put('/:id', userController.updateUser);     // Actualizar un usuario por ID
 router.delete('/:id', userController.deleteUser);  // Desactivar un usuario por ID
 
+
+
 // Rutas para el carrito de compras
 router.put('/:userId/cart/:gameId', userController.addToCart);         // Agregar un juego al carrito
 router.delete('/:userId/cart/:gameId', userController.removeFromCart);  // Eliminar un juego del carrito
@@ -27,6 +29,7 @@ router.put('/:id/role', userController.changeRole);
 router.get('/token', userController.getToken);
 
 router.get('/:id/cart', userController.getShoppingCart);
+router.put('/:id/cart', userController.updateQuantity);
 router.get('/:id/history', userController.getPurchaseHistory);
 router.get('/:id/wishlist', userController.getWishlist);
 

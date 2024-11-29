@@ -126,6 +126,24 @@ const setDiscount = async (req, res) => {
   }
 };
 
+const updateStock = async (req, res) => {
+  try{
+    const game = await Game.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { quantity: -req.query.quantity } },
+      { new: true }
+    );
+
+    if (!game) {
+      return res.status(404).json({ message: 'Juego no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Cantidad actualizada correctamente', game });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar la cantidad', error: error.message });
+  }
+};
+
 module.exports = {
   getAllGames,
   getGameById,
@@ -134,5 +152,6 @@ module.exports = {
   deleteGame,
   getSaleGames,
   addViewCounter,
-  setDiscount
+  setDiscount,
+  updateStock
 };

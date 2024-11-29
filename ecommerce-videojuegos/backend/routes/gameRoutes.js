@@ -11,4 +11,5 @@ router.get('/:id', gameController.getGameById);    // Obtener un juego por ID
 router.put('/:id', gameController.updateGame);     // Actualizar un juego por ID
 router.delete('/:id', gameController.deleteGame);  // Eliminar un juego por ID
 router.put('/:id/views', gameController.addViewCounter); // Agregar una vista a un juego
+router.put('/:id/stock', gameController.updateStock);  // Actualizar el stock de un juego
 module.exports = router;

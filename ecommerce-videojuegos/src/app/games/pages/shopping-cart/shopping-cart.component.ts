@@ -11,6 +11,7 @@ import { PaymentService } from '../../../auth/services/payment.service';
 import { forkJoin } from 'rxjs';
 import { GamesService } from '../../services/games.service';
 import mongoose from 'mongoose';
+import { ShoppingCart } from '../../../auth/interfaces/user.interface';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -21,7 +22,7 @@ import mongoose from 'mongoose';
 })
 export class ShoppingCartComponent {
   public userId !: string;
-  public shoppingCart: string[] = [];
+  public shoppingCart: ShoppingCart[] = [];
   public totalPrices: number[] = [0,0];
   public total = 0;
   public subtotal = 0;
@@ -68,7 +69,7 @@ export class ShoppingCartComponent {
 
   createPayment(){
     const User_ID: string = this.userId;
-    const Games: string[] = this.shoppingCart;
+    const Games: ShoppingCart[] = this.shoppingCart;
     const Purchase_Address: string = this.provinciaService.getFullAddress();
     const Order_Status: string = "en preparación";
     const Total_Amount: number = this.final_total;
@@ -89,9 +90,15 @@ export class ShoppingCartComponent {
     (response) => {
         console.log('Payment successfully created:', response);
         this.route.navigate(['/games']);
-        
-        const deleteRequests = this.shoppingCart.map((gameID) =>
-            this.userService.removeFromCart(this.userId, gameID)
+        this.shoppingCart.map((item) => {
+          this.gameService.updateStock(item._id, item.quantity).subscribe(
+            (response) => {
+              console.log('Stock updated successfully:', response);
+            }
+          );
+        })
+        const deleteRequests = this.shoppingCart.map((item) =>
+            this.userService.removeFromCart(this.userId, item._id)
         );
         // Execute all delete requests in parallel
         forkJoin(deleteRequests).subscribe({
@@ -104,6 +111,7 @@ export class ShoppingCartComponent {
             }
         });
         alert("Succesfully purchased order")
+        
     },
     (err) => {
         alert("Error in the purchase process")

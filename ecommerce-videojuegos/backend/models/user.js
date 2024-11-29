@@ -25,9 +25,10 @@ const userSchema = new Schema({
     enum: ['usuario', 'administrador','Operador de logística'],
     default: 'usuario'
     },
-  shoppingCart: [
-    {type: mongoose.Schema.Types.ObjectId, ref: 'Game'},
-  ],
+  shoppingCart: [{
+    _id: {type: mongoose.Schema.Types.ObjectId, ref: 'Game'},
+    quantity: {type: Number, default: 1},
+  }],
   wishlist: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Game',

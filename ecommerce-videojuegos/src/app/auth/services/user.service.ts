@@ -5,7 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { User } from '../interfaces/user.interface';
 import { catchError, map, Observable, of} from 'rxjs';
 import { GameShoppingCardComponent } from '../../games/components/game-shopping-card/game-shopping-card.component';
-
+import { ShoppingCart } from './../interfaces/user.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -39,11 +39,14 @@ export class UserService {
   login(credential: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/users/login?credential=${credential}&password=${password}`, {})
   }
-  cart(userID: string): Observable<any[]> {
-    return this.http.get<{ shoppingCart: any[] }>(`${this.baseUrl}/api/users/${userID}/cart`).pipe(
+  cart(userID: string): Observable<ShoppingCart[]> {
+    return this.http.get<{ shoppingCart: ShoppingCart[] }>(`${this.baseUrl}/api/users/${userID}/cart`).pipe(
         map(response => response.shoppingCart)
     );
-}
+  }
+  updateCart(userID: string, gameID: string, quantity: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/users/${userID}/cart?gameID=${gameID}&quantity=${quantity}`, {})
+  }
   history(userID: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/api/users/${userID}/history`)
   }

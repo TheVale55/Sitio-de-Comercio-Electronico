@@ -4,7 +4,7 @@ export interface User {
     password: string,
     username: string,
     role: string,
-    shoppingCart: string[],
+    shoppingCart: ShoppingCart[],
     purchaseHistory: string[],
     IsActive: boolean
     createdAt: Date
@@ -12,10 +12,15 @@ export interface User {
     __v: number
 }
 
+export interface ShoppingCart {
+    _id: string,
+    quantity: number,
+}
+
 export interface Payment {
     _id: string,
     User_ID: string,
-    Games: string[],
+    Games: ShoppingCart[],
     Purchase_Address: string,
     Order_Status: string,
     Total_Amount: number,

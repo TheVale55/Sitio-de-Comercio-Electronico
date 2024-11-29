@@ -84,4 +84,7 @@ export class GamesService {
   setSales(): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/api/games/sale`, {});
   }
+  updateStock(gameID: string, quantity: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/games/${gameID}/stock?quantity=${quantity}`, {})
+  }
 }

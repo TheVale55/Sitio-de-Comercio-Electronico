@@ -11,8 +11,13 @@ const paymentSchema = new Schema({
     required: true,
   },
   Games: [{
+    _id: {
     type: mongoose.Schema.Types.ObjectId, ref: 'Game',
-    }],
+    },
+    Quantity: {
+      type: Number,
+    }
+  }],
   Purchase_Address: {
     type: String,
     required: true,
