@@ -53,8 +53,6 @@ export class ShoppingCartComponent {
       this.userService.cart(this.userId).subscribe(
         (cart) => {
           this.shoppingCart = cart; 
-          console.log(cart)
-          console.log(this.shoppingCart)
         }
       )
     }
@@ -71,7 +69,7 @@ export class ShoppingCartComponent {
     console.log(User_ID, Games, Purchase_Address, Order_Status, Total_Amount, createdAt);
 
     const payment: Payment = {
-      id: User_ID+createdAt,
+      _id: User_ID+createdAt,
       User_ID,
       Games,
       Purchase_Address,

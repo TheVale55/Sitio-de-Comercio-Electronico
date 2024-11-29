@@ -39,8 +39,8 @@ export class UserService {
   login(credential: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/api/users/login?credential=${credential}&password=${password}`, {})
   }
-  cart(userID: string): Observable<string[]> {
-    return this.http.get<{ shoppingCart: string[] }>(`${this.baseUrl}/api/users/${userID}/cart`).pipe(
+  cart(userID: string): Observable<any[]> {
+    return this.http.get<{ shoppingCart: any[] }>(`${this.baseUrl}/api/users/${userID}/cart`).pipe(
         map(response => response.shoppingCart)
     );
 }

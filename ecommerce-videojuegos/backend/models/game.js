@@ -49,8 +49,11 @@ const gameSchema = new Schema({
   }],
   views: {
     type: Number,
+  },
+  quantity: {
+    type: Number,
   }
-}, { timestamps: true });
+  }, { timestamps: true });
 
 // Crear el modelo de Juego
 const Game = mongoose.model('Game', gameSchema);

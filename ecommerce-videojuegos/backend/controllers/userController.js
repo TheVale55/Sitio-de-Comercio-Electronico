@@ -80,7 +80,7 @@ const addToCart = async (req, res) => {
       return res.status(404).json({ message: 'Juego no encontrado' });
     }
 
-    user.shoppingCart.push(game._id);
+    user.shoppingCart.push(game);
     await user.save();
 
     res.status(200).json({ message: 'Juego agregado al carrito', user });

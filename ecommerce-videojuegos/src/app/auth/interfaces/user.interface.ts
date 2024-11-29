@@ -13,7 +13,7 @@ export interface User {
 }
 
 export interface Payment {
-    id: string,
+    _id: string,
     User_ID: string,
     Games: string[],
     Purchase_Address: string,

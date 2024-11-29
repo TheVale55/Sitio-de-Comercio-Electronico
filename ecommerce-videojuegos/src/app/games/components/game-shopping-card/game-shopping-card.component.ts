@@ -28,8 +28,9 @@ export class GameShoppingCardComponent {
       throw Error('Game property is required');
     }
     else{
+      console.log(this.gameId)
       this.gameService.getGameById(this.gameId).subscribe(
-        (game) => {this.game = game; this.updateTotal()}
+        (game) => {this.game = game; this.updateTotal(); }
       )
     }
   }

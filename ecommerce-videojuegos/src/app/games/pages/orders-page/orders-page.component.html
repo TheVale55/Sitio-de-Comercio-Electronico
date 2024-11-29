@@ -9,25 +9,22 @@
     <table class="table-auto w-full border-collapse border border-gray-200">
       <thead>
         <tr class="bg-blue-100">
-          <th class="border border-gray-300 px-4 py-2">ID</th>
-          <th class="border border-gray-300 px-4 py-2">Customer Name</th>
-          <th class="border border-gray-300 px-4 py-2">Product</th>
+          <th class="border border-gray-300 px-4 py-2">Customer ID</th>
+          <th class="border border-gray-300 px-4 py-2">Purchase Address</th>
           <th class="border border-gray-300 px-4 py-2">Date</th>
           <th class="border border-gray-300 px-4 py-2">Status</th>
-          <th class="border border-gray-300 px-4 py-2">Actions</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let order of orders" class="hover:bg-gray-100">
-          <td class="border border-gray-300 px-4 py-2 text-center">{{ order.id }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ order.customerName }}</td>
-          <td class="border border-gray-300 px-4 py-2">{{ order.product }}</td>
-          <td class="border border-gray-300 px-4 py-2 text-center">{{ order.date }}</td>
+      <tbody> 
+        <tr *ngFor="let order of payments" class="hover:bg-gray-100">
+          <td class="border border-gray-300 px-4 py-2">{{order.User_ID }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ order.Purchase_Address }}</td>
+          <td class="border border-gray-300 px-4 py-2 text-center">{{ order.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</td>
           <td class="border border-gray-300 px-4 py-2">
             <select
                 class="bg-gray-50 border border-gray-300 text-gray-600 rounded px-2 py-1"
-                [value]="order.status"
-                (change)="updateStatus(order.id, statusSelect.value)"
+                [value]="order.Order_Status"
+                (change)="updateStatus(order._id, statusSelect.value, order)"
                 #statusSelect
                 >
                 <option *ngFor="let status of statuses" [value]="status">
@@ -35,22 +32,6 @@
                 </option>
             </select>
 
-          </td>
-          
-          <td class="border border-gray-300 px-4 py-2 text-center space-x-4">
-            <button
-              class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
-              (click)="updateOrder(order.id)"
-
-            >
-                Actualizar
-            </button>
-            <button
-              class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
-              (click)="removeOrder(order.id)"
-            >
-              Eliminar
-            </button>
           </td>
         </tr>
       </tbody>
