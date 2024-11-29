@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Game } from '../../interfaces/games.interface';
 import { GameShoppingCardComponent } from "../../components/game-shopping-card/game-shopping-card.component";
 import { CommonModule } from '@angular/common';
-import { User } from '../../../auth/interfaces/user.interface';
+import { Payment, User } from '../../../auth/interfaces/user.interface';
 import { UserService } from '../../../auth/services/user.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ProvinciasService } from '../../../auth/services/provincias.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,20 +16,27 @@ import { Router } from '@angular/router';
   styleUrl: '../../../app.component.scss',
 })
 export class ShoppingCartComponent {
-  public userId !: User;
+  public userId !: string;
   //TODO BRAYTON remove these strings to try out service
-  public shoppingCart: string[] = ["673e74d5a2be1410b7e213d6","673e74d5a2be1410b7e21410"];
+  public shoppingCart: string[] = [];
   public totalPrices: number[] = [0,0];
   public total = 0;
   public subtotal = 0;
-  public shipping = 5;
+  public shipping = 10;
   public tax = 0;
   public final_total = 0;
   public envio_estandar = []
 
+  isCartVisible: boolean = true;
+  isSummaryVisible: boolean = false;
+  isShippingVisible: boolean = false;
+  isPaymentVisible: boolean = false;
+
+
   constructor(
     private route: Router,
     private userService: UserService,
+    public provinciaService: ProvinciasService,
   ){}
 
   ngOnInit(): void {
@@ -37,14 +45,32 @@ export class ShoppingCartComponent {
       this.route.navigate(['/login'])
       return;
     }else{
-      this.userService.cart(userID).subscribe(
+      this.userId = userID.toString().replace(/"/g, '');
+      this.userService.cart(this.userId).subscribe(
         (cart) => {
           this.shoppingCart = cart; 
+          console.log(cart)
+          console.log(this.shoppingCart)
         }
       )
     }
 
   }
+
+  createPayment(){
+    const User_ID: string = this.userId;
+    const Games: string[] = this.shoppingCart;
+    const Purchase_Address: string = this.provinciaService.getFullAddress();
+    const Order_Status: string = "en preparación";
+    const Total_Amount: number = this.final_total;
+    const createdAt: Date = new Date();
+    console.log(User_ID, Games, Purchase_Address, Order_Status, Total_Amount, createdAt);
+
+    // TODO ANADIR SERVICIO PARA CREAR EL PAYMENT
+    // TODO DIRIGIR AL CLIENTE A LA PAGINA DE PEDIDOS
+    // TODO VACIAR CARRITO DEL CLIENTE 
+  }
+
 
   onTotalPriceChange(newTotal: number, gamePosition: number) {
     this.totalPrices[gamePosition] = newTotal;
@@ -65,7 +91,7 @@ export class ShoppingCartComponent {
     this.subtotal = this.total;
     this.total = this.total + this.shipping;
     this.total = this.roundToDecimal(this.total, 2);
-    this.tax = this.roundToDecimal(this.total*0.15, 2);
+    this.tax = this.roundToDecimal(this.total*0.13, 2);
     this.final_total = this.roundToDecimal(this.total+this.tax, 2);
     console.log(this.total, this.subtotal, this.shipping);
   }
@@ -74,11 +100,28 @@ export class ShoppingCartComponent {
     const factor = Math.pow(10, decimalPlaces);
     return Math.round(num * factor) / factor;
   }
-  
-  isCartVisible: boolean = true;
 
   toggleCart() {
     this.isCartVisible = !this.isCartVisible;
+  }
+
+  togglePayment() {
+    this.isPaymentVisible = !this.isPaymentVisible;
+  }
+
+  toggleShipping() {
+    this.isShippingVisible = !this.isShippingVisible;
+  }
+
+  toggleSummary() {
+    this.isSummaryVisible = !this.isSummaryVisible;
+  }
+
+  backToCart(){
+    this.isCartVisible = true;
+    this.isSummaryVisible = false;
+    this.isShippingVisible = false;
+    this.isPaymentVisible = false;
   }
 
   paymentData = {
@@ -88,12 +131,7 @@ export class ShoppingCartComponent {
     cardholderName: ''
   };
 
-  onSubmit(): void {
-    if (this.isValidForm()) {
-      alert('Payment submitted successfully!');
-      console.log(this.paymentData);
-    }
-  }
+  onSubmit(): void {  }
 
   isValidForm(): boolean {
     const { cardNumber, expiryDate, securityCode, cardholderName } = this.paymentData;

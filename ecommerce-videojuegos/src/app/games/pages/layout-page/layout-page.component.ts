@@ -61,7 +61,7 @@ export class LayoutPageComponent {
   wishlist() {
     console.log('Redirigiendo a la página de wishlist...');
     this.isDropdownOpen = false;
-    this.router.navigate(['/wishlist']); // Asegúrate de que esta ruta exista
+    this.router.navigate(['/games/wishlist']); // Asegúrate de que esta ruta exista
   }
 
   @HostListener('document:click', ['$event'])

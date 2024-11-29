@@ -27,11 +27,7 @@ interface Distritos {
 })
 export class ProvinciasService {
 
-
 constructor() { }
-
-  
-
 
 provincias: Provincias = {
 		"1": {
@@ -960,8 +956,6 @@ provincias: Provincias = {
 	}
 };
 
-
-
 provinciasKeys = Object.keys(this.provincias);
 cantonesKeys: string[] = [];
 distritosKeys: string[] = [];
@@ -969,20 +963,68 @@ distritosKeys: string[] = [];
 selectedProvincia: string = '';
 selectedCanton: string = '';
 selectedDistrito: string = '';
+exactAddress: string = '';
 
-onProvinciaChange(provinciaKey: string): void {
-this.selectedCanton = '';
-this.selectedDistrito = '';
-this.cantonesKeys = Object.keys(this.provincias[provinciaKey]?.cantones || {});
-this.distritosKeys = [];
-}
-
-onCantonChange(cantonKey: string): void {
-this.selectedDistrito = '';
-this.distritosKeys = Object.keys(
-    this.provincias[this.selectedProvincia]?.cantones[cantonKey]?.distritos || {}
-);
+filteredProvinciasKeys(shipping : number ): string[] {
+    if (shipping === 2 || shipping === 10) {
+      return ['1', '2', '3', '4']; // Provincias 1 to 4
+    } else if (shipping === 5 || shipping === 15) {
+      return ['5', '6', '7']; // Provincias 5 to 7
+    } else {
+      return []; // No provincias available if shipping doesn't match
+    }
   }
 
+onProvinciaChange(event: Event): void {
+	const target = event.target as HTMLSelectElement;
+	const selectedValue = target.value;
+  
+	if (selectedValue && this.provincias[selectedValue]) {
+	  this.selectedProvincia = selectedValue;
+	  this.cantonesKeys = Object.keys(this.provincias[selectedValue].cantones);
+	} else {
+	  this.selectedProvincia = "";
+	  this.cantonesKeys = [];
+	  this.selectedCanton = "";
+	  this.distritosKeys = [];
+	}
+  }
+  
+
+  onCantonChange(event: Event): void {
+	const target = event.target as HTMLSelectElement;
+	const selectedValue = target.value;
+  
+	if (selectedValue && this.provincias[this.selectedProvincia]?.cantones[selectedValue]) {
+	  this.selectedCanton = selectedValue;
+	  this.distritosKeys = Object.keys(
+		this.provincias[this.selectedProvincia].cantones[selectedValue].distritos
+	  );
+	} else {
+	  this.selectedCanton = "";
+	  this.distritosKeys = [];
+	}
+  }
+  
+  onDistritoChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.selectedDistrito = target.value;
+  }
+
+  getFullAddress(): string {
+    const provincia = this.selectedProvincia
+      ? this.provincias[this.selectedProvincia].nombre
+      : '';
+    const canton = this.selectedCanton
+      ? this.provincias[this.selectedProvincia]?.cantones[this.selectedCanton]
+          .nombre
+      : '';
+    const distrito = this.selectedDistrito
+      ? this.provincias[this.selectedProvincia]?.cantones[this.selectedCanton]
+          ?.distritos[this.selectedDistrito]
+      : '';
+
+    return `${provincia}, ${canton}, ${distrito}, ${this.exactAddress}`.trim().replace(/^,|,$/g, '');
+  }
 
 }

@@ -8,6 +8,7 @@ import { RegisterPageComponent } from './auth/pages/register-page/register-page.
 import { LandPageComponent } from './shared/pages/land-page/land-page.component';
 import { ShoppingCartComponent } from './games/pages/shopping-cart/shopping-cart.component';
 import { GameEditComponent } from './games/pages/game-edit/game-edit.component';
+import { WishilistComponent } from './games/pages/wishilist/wishilist.component';
 
 
 export const routes: Routes = [
@@ -21,6 +22,7 @@ export const routes: Routes = [
         children: [
             { path: 'list', component: GameListComponent },
             { path: 'cart', component: ShoppingCartComponent},
+            { path: 'wishlist', component: WishilistComponent},
             { path: ':id', component: GamePageComponent  },
             { path: '**', redirectTo: 'list' },
        

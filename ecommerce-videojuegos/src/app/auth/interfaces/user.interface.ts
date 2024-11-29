@@ -3,9 +3,9 @@ export interface User {
     email: string,
     password: string,
     username: string,
-    role: string
-    shoppingCart: string[]
-    purchaseHistory: string[]
+    role: string,
+    shoppingCart: string[],
+    purchaseHistory: string[],
     IsActive: boolean
     createdAt: Date
     updatedAt: Date

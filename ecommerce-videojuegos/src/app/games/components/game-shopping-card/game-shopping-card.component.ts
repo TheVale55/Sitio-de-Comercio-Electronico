@@ -3,6 +3,7 @@ import { Game } from '../../interfaces/games.interface';
 import { CommonModule } from '@angular/common';
 import { GamesService } from '../../services/games.service';
 import { UserService } from '../../../auth/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game-shopping-card',
@@ -20,7 +21,7 @@ export class GameShoppingCardComponent {
   price : number = 0;
   @Output() total_price = new EventEmitter<number>();
 
-  constructor(private gameService: GamesService, private userService : UserService){}
+  constructor(private gameService: GamesService, private userService : UserService, private route: Router){}
 
   ngOnInit(): void {
     if (!this.gameId) {
@@ -44,13 +45,39 @@ export class GameShoppingCardComponent {
     return Math.round(num * factor) / factor;
   }
 
-  addToWishlist(){
-    const userId = "";
-    this.userService.addToCart(userId, this.gameId)
+  addToWishlist() {
+    const userID = localStorage.getItem('user')
+    if (!userID) {
+      this.route.navigate(['/login'])
+      return;
+    }else{
+      this.userService.addToWishlist(userID.toString().replace(/"/g, ''), this.game._id).subscribe(
+        (response) => {
+          console.log('Item removed from cart:', response);
+      },
+      (error) => {
+          alert("Could not add item to wishlist");
+      }
+      )
+    }
   }
 
   removeFromShoppingCart(){
-
+    const userID = localStorage.getItem('user')
+    if (!userID) {
+      this.route.navigate(['/login'])
+      return;
+    }else{
+      this.userService.removeFromCart(userID.toString().replace(/"/g, ''), this.game._id).subscribe( 
+        (response) => {
+          console.log('Item removed from cart:', response);
+          window.location.reload();
+      },
+      (error) => {
+          console.error('Error removing item from cart:', error);
+      }
+      )
+    }
   }
 
   increaseQuantity(){

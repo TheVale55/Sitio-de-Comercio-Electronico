@@ -1,0 +1,18 @@
+<!--SHOPPING CART -->
+<section class="py-8 antialiased dark:bg-gray-900 md:py-16">
+    <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+        <h2 class="text-5xl text-center text-blue font-bold dark:text-white">Wishlist</h2>
+    
+        <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
+            <!--Items-->
+            <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
+                <app-game-wishlist-card
+                *ngFor="let game of wishlist"
+                [gameId]="game"
+                ></app-game-wishlist-card>
+          </div>
+        
+        </div>
+    </div>
+</section>
+
