@@ -12,6 +12,7 @@ import { WishilistComponent } from './games/pages/wishilist/wishilist.component'
 import { GameAddComponent } from './games/pages/game-add/game-add.component';
 import { DashboardComponent } from './games/pages/dashboard/dashboard.component';
 import { UserProfileComponent } from './auth/pages/user-profile/user-profile.component';
+import { OrdersComponent } from './games/pages/orders-page/orders-page.component';
 
 
 export const routes: Routes = [
@@ -30,6 +31,7 @@ export const routes: Routes = [
           { path: 'user-profile/:id', component: UserProfileComponent }, // Perfil del usuario
           { path: 'edit-game/:id', component: GameEditComponent }, // Editar juegos
           { path: 'dashboard', component: DashboardComponent }, // Dashboard con navbar
+          { path: 'orders', component: OrdersComponent }, // Pedidos
           { path: ':id', component: GamePageComponent }, // Detalle del juego
           { path: '**', redirectTo: 'list' } // Redirección a lista si no se encuentra la ruta
         ]

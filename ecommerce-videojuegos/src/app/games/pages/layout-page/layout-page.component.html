@@ -68,6 +68,13 @@
               <!-- Opciones adicionales para administrador -->
               <li *ngIf="isAdmin">
                 <a
+                  (click)="orders()"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Orders
+                </a>
+              <li *ngIf="isAdmin">
+                <a
                   (click)="viewStatistics()"
                   class="block px-4 py-2 hover:bg-gray-100"
                 >
