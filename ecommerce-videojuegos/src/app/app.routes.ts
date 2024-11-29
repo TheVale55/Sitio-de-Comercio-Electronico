@@ -23,28 +23,16 @@ export const routes: Routes = [
         path: 'games',
         component: LayoutPageComponent,
         children: [
-            { path: 'list', component: GameListComponent },
-            { path: 'cart', component: ShoppingCartComponent},
-            { path: 'wishlist', component: WishilistComponent},
-            { path: ':id', component: GamePageComponent  },
-            { path: '**', redirectTo: 'list' },
-       
+          { path: 'list', component: GameListComponent }, // Lista de juegos
+          { path: 'cart', component: ShoppingCartComponent }, // Carrito de compras
+          { path: 'wishlist', component: WishilistComponent }, // Lista de deseos
+          { path: ':id', component: GamePageComponent }, // Detalle del juego
+          { path: 'add-game', component: GameAddComponent }, // Añadir juegos
+          { path: 'user-profile/:id', component: UserProfileComponent }, // Perfil del usuario
+          { path: 'edit-game/:id', component: GameEditComponent }, // Editar juegos
+          { path: 'dashboard', component: DashboardComponent }, // Dashboard con navbar
+          { path: '**', redirectTo: 'list' } // Redirección a lista si no se encuentra la ruta
         ]
-    },
-    {   path: 'admin/edit-game/:id', 
-        component: GameEditComponent 
-    },
-    {   path: 'admin/add-game',
-        component: GameAddComponent
-
-    },
-    {
-        path: 'admin/dashboard',
-        component: DashboardComponent
-    },
-    {
-        path: 'user-profile/:id',
-        component: UserProfileComponent
     },
     {
         path: 'login', // Mover esta ruta antes de los comodines

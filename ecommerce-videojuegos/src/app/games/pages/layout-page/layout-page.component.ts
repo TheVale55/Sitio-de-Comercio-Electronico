@@ -9,16 +9,20 @@ import { User } from '../../../auth/interfaces/user.interface';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './layout-page.component.html',
-  styles: ``,
+  styles: ``
 })
 export class LayoutPageComponent {
   isLoggedIn: boolean = false; // Estado del usuario logueado
   isDropdownOpen: boolean = false;
   isAdmin: boolean = false; // Bandera para determinar si el usuario es administrador
   userName: string = ''; // Nombre del usuario
+  cartItems: number = 0; // Número de elementos en el carrito
 
-
-  constructor(private router: Router, private eRef: ElementRef, private userService: UserService) {
+  constructor(
+    private router: Router,
+    private eRef: ElementRef,
+    private userService: UserService
+  ) {
     // Verifica el estado de autenticación
     const user = localStorage.getItem('user'); // Obtén datos del usuario almacenados
     const role = localStorage.getItem('role'); // Obtén el rol almacenado
@@ -58,35 +62,34 @@ export class LayoutPageComponent {
     if (userId) {
       console.log(`Redirigiendo al perfil del usuario con ID: ${userId}`);
       this.isDropdownOpen = false; // Cierra el dropdown
-      this.router.navigate([`/user-profile/${userId}`]); // Redirige a la ruta con el ID
+      this.router.navigate([`/games/user-profile/${userId}`]); // Redirige a la ruta con el ID
     } else {
       console.error('No se encontró un ID de usuario en el almacenamiento local.');
     }
   }
-  
 
   cart() {
-    console.log('Redirigiendo a la página de carrito...');
+    console.log('Redirigiendo a la página del carrito...');
     this.isDropdownOpen = false;
-    this.router.navigate(['/games/cart']); // Asegúrate de que esta ruta exista
+    this.router.navigate(['/games/cart']); // Ruta correcta para carrito
   }
 
   wishlist() {
     console.log('Redirigiendo a la página de wishlist...');
     this.isDropdownOpen = false;
-    this.router.navigate(['/games/wishlist']); // Asegúrate de que esta ruta exista
+    this.router.navigate(['/games/wishlist']); // Ruta correcta para wishlist
   }
 
   viewStatistics(): void {
     console.log('Redirigiendo a la página de estadísticas...');
     this.isDropdownOpen = false;
-    this.router.navigate(['/admin/dashboard']); // Ruta de estadísticas
+    this.router.navigate(['/games/dashboard']); // Ruta correcta para estadísticas
   }
 
   addGame(): void {
     console.log('Redirigiendo a la página para añadir juegos...');
     this.isDropdownOpen = false;
-    this.router.navigate(['/admin/add-game']); // Ruta para añadir juegos
+    this.router.navigate(['/games/add-game']); // Ruta correcta para añadir juegos
   }
 
   @HostListener('document:click', ['$event'])
@@ -95,6 +98,4 @@ export class LayoutPageComponent {
       this.isDropdownOpen = false; // Cierra el menú si se hace clic fuera de él
     }
   }
-
-  cartItems: number = 0; // Número de elementos en el carrito
 }

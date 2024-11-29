@@ -39,7 +39,7 @@ export class GameCardComponent implements OnInit {
 
   editarJuego(id: string): void {
     console.log(`Navegando a la página de edición del juego con ID: ${id}`);
-    this.router.navigate(['/admin/edit-game', id]);
+    this.router.navigate(['/games/edit-game', id]);
     window.scrollTo(0, 0); // Opcional: desplaza la ventana hacia arriba
   }
 }
