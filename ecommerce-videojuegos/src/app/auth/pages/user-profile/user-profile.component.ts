@@ -1,3 +1,4 @@
+import { Payment } from './../../interfaces/user.interface';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../auth/services/user.service';
@@ -5,7 +6,9 @@ import { User } from '../../../auth/interfaces/user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { Game } from '../../../games/interfaces/games.interface';
+import { GamesService } from '../../../games/services/games.service';
+import { PaymentService } from '../../services/payment.service';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -25,7 +28,10 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    private gameService: GamesService,
+    private paymentService: PaymentService,
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +58,7 @@ export class UserProfileComponent implements OnInit {
           password: '',
         });
         this.loadingUser = false;
+        this.orders = user.purchaseHistory;
       },
       (error) => {
         this.errorMessage = 'No se pudo cargar la información del usuario.';

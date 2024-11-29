@@ -33,7 +33,8 @@ const createPayment = async (req, res) => {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
     user.purchaseHistory.push(newPayment._id);
-    res.status(201).json(payment);
+    await user.save();
+    res.status(201).json(user);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

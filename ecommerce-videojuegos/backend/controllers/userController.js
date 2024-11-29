@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Game = require('../models/game');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
   try {
@@ -40,6 +41,9 @@ const createUser = async (req, res) => {
 // Actualizar un usuario
 const updateUser = async (req, res) => {
   try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedUser) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
