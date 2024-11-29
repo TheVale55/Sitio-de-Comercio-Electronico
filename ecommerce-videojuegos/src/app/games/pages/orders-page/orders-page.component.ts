@@ -41,6 +41,13 @@ export class OrdersComponent {
     }
   }
 
+  updateOrder(orderId: number = 0) {
+    const order = this.orders.find(o => o.id === orderId);
+    if (order) {
+      console.log(`El pedido con ID ${orderId} ha sido actualizado`);
+    }
+  }
+
   removeOrder(orderId: number) {
     const index = this.orders.findIndex(o => o.id === orderId);
     if (index !== -1) {
