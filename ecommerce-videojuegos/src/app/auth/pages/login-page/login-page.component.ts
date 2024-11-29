@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
@@ -32,8 +33,6 @@ export class LoginPageComponent {
         localStorage.setItem('role', JSON.stringify(user.user.role));
         this.router.navigate(['/games']);
       });
-    
-    
   }
 
   passwordVisible: boolean = false;
