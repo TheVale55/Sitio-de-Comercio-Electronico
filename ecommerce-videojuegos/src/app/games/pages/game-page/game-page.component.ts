@@ -102,8 +102,15 @@ export class GamePageComponent {
       this.route.navigate(['/login'])
       return;
     }else{
-      this.userService.addToCart(userID.toString().replace(/"/g, ''), game._id).subscribe()
-      console.log("Game added to cart of ", userID)
+      this.userService.addToCart(userID.toString().replace(/"/g, ''), game._id).subscribe({
+        next: () => {
+          alert('Game added to cart successfully!');
+        },
+        error: (err) => {
+          alert( 'Failed to add game to cart');
+        },
+      });
+
     }
   }
   addToWishlist(game: Game) {
@@ -112,7 +119,15 @@ export class GamePageComponent {
       this.route.navigate(['/login'])
       return;
     }else{
-      this.userService.addToWishlist(userID.toString().replace(/"/g, ''), game._id).subscribe( )
+      this.userService.addToWishlist(userID.toString().replace(/"/g, ''), game._id).subscribe({
+          next: () => {
+            alert('Game added to wishlist successfully!');
+          },
+          error: (err) => {
+            alert( 'Failed to add game to wishilist');
+          },
+        
+    });
     }
   }
 

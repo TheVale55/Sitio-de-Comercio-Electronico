@@ -27,11 +27,20 @@ export class RegisterPageComponent {
       this.registerForm.markAllAsTouched();
       return;
     }
-    this.userService.register(this.registerForm.value.username!, this.registerForm.value.password!, this.registerForm.value.email!)
-      .subscribe(user => {
-          console.log(user);
-          this.router.navigate(['/games']);
-      });
+    this.userService.register(
+      this.registerForm.value.username!,
+      this.registerForm.value.password!,
+      this.registerForm.value.email!
+    ).subscribe({
+      next: (user) => {
+        console.log(user);
+        this.router.navigate(['/games']);
+      },
+      error: (err) => {
+        alert('Registration failed');
+      },
+    });
+    
   }
 
   passwordVisible: boolean = false;

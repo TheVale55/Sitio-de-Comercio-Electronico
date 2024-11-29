@@ -55,7 +55,7 @@ export class GameShoppingCardComponent {
     }else{
       this.userService.addToWishlist(userID.toString().replace(/"/g, ''), this.game._id).subscribe(
         (response) => {
-          console.log('Item removed from cart:', response);
+          alert("Item was succesfully added to wishlist");
       },
       (error) => {
           alert("Could not add item to wishlist");
@@ -77,6 +77,7 @@ export class GameShoppingCardComponent {
       },
       (error) => {
           console.error('Error removing item from cart:', error);
+          alert("Error removing item from cart");
       }
       )
     }
@@ -84,7 +85,6 @@ export class GameShoppingCardComponent {
 
   increaseQuantity(){
     this.quantity++;
-    //TODO añadir servicio
     this.userService.updateCart(localStorage.getItem('user')?.toString().replace(/"/g, '')!, this.game._id, this.quantity).subscribe(
       (response) => {
         console.log('Item removed from cart:', response);
@@ -96,7 +96,6 @@ export class GameShoppingCardComponent {
   decreaseQuantity(){
     if(this.quantity>1){
       this.quantity--;
-      //TODO añadir servicio
       this.userService.updateCart(localStorage.getItem('user')?.toString().replace(/"/g, '')!, this.game._id, this.quantity).subscribe(
         (response) => {
           console.log('Item removed from cart:', response);

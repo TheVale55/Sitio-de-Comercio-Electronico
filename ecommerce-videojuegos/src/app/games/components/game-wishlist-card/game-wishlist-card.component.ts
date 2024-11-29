@@ -36,7 +36,7 @@ export class GameWishlistCardComponent {
   addToCart(){
     this.userService.addToCart(this.userId, this.gameId).subscribe(
       (response) => {
-        console.log('Item added to cart', response);
+        alert("Item was succesfully added to cart");
       },
       (error) => {
           alert("Could not add item to cart");

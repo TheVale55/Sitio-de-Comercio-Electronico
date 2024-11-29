@@ -133,6 +133,13 @@ export class DashboardComponent implements OnInit {
   }
 
   setSales(): void {
-    this.gameService.setSales().subscribe();
+    this.gameService.setSales().subscribe({
+      next: () => {
+        alert('New sales created succesfully!');
+      },
+      error: (err) => {
+        alert( 'Failed to add create new sales');
+      },
+    });
   }
 }
