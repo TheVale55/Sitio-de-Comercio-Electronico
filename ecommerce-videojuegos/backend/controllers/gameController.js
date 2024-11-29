@@ -3,7 +3,8 @@ const Game = require('../models/game');
 // Obtener todos los juegos con filtros avanzados y búsqueda parcial
 const getAllGames = async (req, res) => {
   try {
-    const { platform, category, esrbRating, precioMin, precioMax, brand} = req.query;
+    var games;
+    const { platform, category, esrbRating, precioMin, precioMax, brand, views} = req.query;
     // Crear un objeto de filtro dinámico
     const filters = {};
     // Búsqueda parcial por plataforma
@@ -28,7 +29,7 @@ const getAllGames = async (req, res) => {
       filters.Brand = { $regex: brand, $options: 'i' }; // Búsqueda insensible a mayúsculas/minúsculas
     }
     // Consultar la base de datos aplicando los filtros
-    const games = await Game.find(filters);
+    views === false ? games = await Game.find(filters) : games = await Game.find(filters).sort({ views: -1 });
     res.status(200).json(games);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -109,6 +110,22 @@ const deleteGame = async (req, res) => {
   }
 };
 
+const setDiscount = async (req, res) => {
+  try{
+    await Game.updateMany({}, { $set: { Discount: 0 } });
+    const values = [10, 20, 30, 40, 50, 60, 70, 80, 90];
+    const randomGames = await Game.aggregate([{ $sample: { size: 16 } }]);
+    for (const game of randomGames) {
+      const randomIndex = Math.floor(Math.random() * values.length);
+      const randomValue = values[randomIndex];
+      await Game.findByIdAndUpdate(game._id, { Discount: randomValue });
+    }
+    res.status(200).json({ message: 'Descuentos actualizados' });
+  }catch(err){
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   getAllGames,
   getGameById,
@@ -116,5 +133,6 @@ module.exports = {
   updateGame,
   deleteGame,
   getSaleGames,
-  addViewCounter
+  addViewCounter,
+  setDiscount
 };

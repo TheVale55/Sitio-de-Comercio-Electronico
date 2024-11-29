@@ -38,11 +38,11 @@ export class GamesService {
     platform: string,
     precioMin: string,
     precioMax: string,
-    brand: string
+    brand: string,
+    views: boolean
   ): Observable<Game[]> {
-    console.log(esbrRating, category, platform, brand, precioMax, precioMin);
     return this.http.get<Game[]>(
-      `${this.baseUrl}/api/games?esrbRating=${esbrRating}&category=${category}&platform=${platform}&precioMin=${precioMin}&precioMax=${precioMax}&brand=${brand}`
+      `${this.baseUrl}/api/games?esrbRating=${esbrRating}&category=${category}&platform=${platform}&precioMin=${precioMin}&precioMax=${precioMax}&brand=${brand}&views=${views}`
     );
   }
 
@@ -79,5 +79,9 @@ export class GamesService {
 
   addGame(game: Game): Observable<Game> {
     return this.http.post<Game>(`${this.baseUrl}/api/games`, game);
+  }
+
+  setSales(): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/api/games/sale`, {});
   }
 }

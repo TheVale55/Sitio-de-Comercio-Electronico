@@ -28,11 +28,12 @@ export class GameListComponent {
   public searchQuery: string = '';
   public filteredGames: Game[] = [];
   private searchSubject = new Subject<string>();
+  private topViews: boolean = false;
 
   constructor(private gameService: GamesService) {}
 
   ngOnInit(): void {
-    this.gameService.getGames("","","","","","").subscribe(
+    this.gameService.getGames("","","","","","",false).subscribe(
       games => {this.games = games; this.all_games=games}
     );
     //Search bar observer
@@ -73,7 +74,7 @@ export class GameListComponent {
     category: '',
     brand: '',
     platform: '',
-    popularity: 0,
+    popularity: false,
   };
   
   toggleDropdown() {
@@ -83,10 +84,11 @@ export class GameListComponent {
   applyFilters() {
     const minPrice = this.filters.minPrice > 0 ? this.filters.minPrice.toString() : "";
     const maxPrice = this.filters.maxPrice > 0 ? this.filters.maxPrice.toString() : "";
-    //console.log(this.filters.esbrRating, this.filters.category, this.filters.platform, minPrice, maxPrice, this.filters.brand)
-    this.gameService.getGames(this.filters.esbrRating, this.filters.category, this.filters.platform, minPrice, maxPrice, this.filters.brand)
+    console.log(this.filters.popularity)  
+    // console.log(this.filters.esbrRating, this.filters.category, this.filters.platform, minPrice, maxPrice, this.filters.brand, this.topViews ? "true" : "false")
+    this.gameService.getGames(this.filters.esbrRating, this.filters.category, this.filters.platform, minPrice, maxPrice, this.filters.brand, this.filters.popularity)
     .subscribe(
-      games => {this.games = games; console.log(games)}
+      games => {this.games = games;}
     );
     this.dropdownOpen = false; 
   }
