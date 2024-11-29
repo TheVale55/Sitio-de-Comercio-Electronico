@@ -1,0 +1,56 @@
+<div class="container mx-auto p-6">
+    <!-- Header -->
+    <div class="mb-6 text-center">
+      <h2 class="text-3xl font-bold text-blue-600 mb-2">Statistics Dashboard</h2>
+      <p class="text-gray-600">Monitor sales, user activity, and orders efficiently</p>
+    </div>
+  
+    <!-- Tabs -->
+    <div class="bg-white shadow-md rounded-lg">
+      <div class="flex border-b text-gray-600">
+        <button
+          class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+          [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'topProducts'}"
+          (click)="setActiveTab('topProducts')"
+        >
+          Top Products
+        </button>
+        <button
+          class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+          [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'activeUsers'}"
+          (click)="setActiveTab('activeUsers')"
+        >
+          Active Users
+        </button>
+        <button
+          class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+          [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'dailyOrders'}"
+          (click)="setActiveTab('dailyOrders')"
+        >
+          Daily Orders
+        </button>
+      </div>
+  
+      <!-- Tab Content -->
+      <div class="p-6">
+        <!-- Top Products -->
+        <div *ngIf="activeTab === 'topProducts'" class="mb-8">
+          <h2 class="text-xl font-semibold mb-2">Top Selling Products</h2>
+          <canvas id="topProductsChart" class="w-full h-64"></canvas>
+        </div>
+  
+        <!-- Active Users -->
+        <div *ngIf="activeTab === 'activeUsers'" class="mb-8">
+          <h2 class="text-xl font-semibold mb-2">Active Users by Day</h2>
+          <canvas id="activeUsersChart" class="w-full h-64"></canvas>
+        </div>
+  
+        <!-- Daily Orders -->
+        <div *ngIf="activeTab === 'dailyOrders'">
+          <h2 class="text-xl font-semibold mb-2">Orders Placed by Day</h2>
+          <canvas id="dailyOrdersChart" class="w-full h-64"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  

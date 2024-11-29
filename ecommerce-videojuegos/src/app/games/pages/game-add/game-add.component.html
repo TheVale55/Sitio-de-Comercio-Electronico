@@ -1,135 +1,190 @@
 <div class="container mx-auto p-6">
-    <!-- Header -->
-    <div class="mb-6 text-center">
-      <h2 class="text-3xl font-bold text-blue-600 mb-2">Add New Game</h2>
-      <p class="text-gray-600">Fill out the form to add a new game</p>
-    </div>
-  
-    <!-- Tabs -->
-    <div class="bg-white shadow-md rounded-lg">
-      <div class="flex border-b text-gray-600">
-        <button
-          class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
-          [ngClass]="{ 'border-b-2 border-blue-600 text-blue-600': activeTab === 'main' }"
-          (click)="setActiveTab('main')"
-        >
-          Main Info
-        </button>
-        <button
-          class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
-          [ngClass]="{ 'border-b-2 border-blue-600 text-blue-600': activeTab === 'media' }"
-          (click)="setActiveTab('media')"
-        >
-          Media & Rating
-        </button>
-        <button
-          class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
-          [ngClass]="{ 'border-b-2 border-blue-600 text-blue-600': activeTab === 'categories' }"
-          (click)="setActiveTab('categories')"
-        >
-          Categories
-        </button>
-        <button
-          class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
-          [ngClass]="{ 'border-b-2 border-blue-600 text-blue-600': activeTab === 'platforms' }"
-          (click)="setActiveTab('platforms')"
-        >
-          Platforms
-        </button>
-      </div>
-  
-      <!-- Tab Content -->
-      <div class="p-6">
-        <!-- Main Info -->
-        <div *ngIf="activeTab === 'main'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-            <input
-              id="name"
-              type="text"
-              [(ngModel)]="game.Game_Name"
-              class="w-full px-4 py-2 border rounded-lg"
-            />
-          </div>
-          <div>
-            <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
-            <input
-              id="price"
-              type="number"
-              [(ngModel)]="game.Game_Price"
-              class="w-full px-4 py-2 border rounded-lg"
-            />
-          </div>
-          <div class="md:col-span-2">
-            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-            <textarea
-              id="description"
-              [(ngModel)]="game.Game_Description"
-              class="w-full px-4 py-2 border rounded-lg"
-              rows="5"
-            ></textarea>
-          </div>
-        </div>
-  
-        <!-- Media & Rating -->
-        <div *ngIf="activeTab === 'media'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label for="backgroundImage" class="block text-sm font-medium text-gray-700">Background Image</label>
-            <input
-              id="backgroundImage"
-              type="text"
-              [(ngModel)]="game.Game_Background_Image"
-              class="w-full px-4 py-2 border rounded-lg"
-            />
-          </div>
-          <div>
-            <label for="esrb" class="block text-sm font-medium text-gray-700">ESRB Rating</label>
-            <select
-              id="esrb"
-              [(ngModel)]="game.Game_ESRB_Rating"
-              class="w-full px-4 py-2 border rounded-lg"
-            >
-              <option *ngFor="let rating of esrbRatings" [value]="rating">{{ rating }}</option>
-            </select>
-          </div>
-        </div>
-  
-        <!-- Categories -->
-        <div *ngIf="activeTab === 'categories'" class="grid grid-cols-1 gap-4">
-          <div *ngFor="let category of game.Game_Category; let i = index" class="flex items-center">
-            <input
-              type="text"
-              [(ngModel)]="game.Game_Category[i]"
-              class="flex-1 px-4 py-2 border rounded-lg"
-            />
-            <button
-              type="button"
-              (click)="removeItem('Game_Category', i)"
-              class="ml-2 p-2 text-white bg-red-500 rounded-lg"
-            >
-              Remove
-            </button>
-          </div>
-          <button
-            type="button"
-            (click)="addItem('Game_Category')"
-            class="px-4 py-2 text-white bg-green-500 rounded-lg"
-          >
-            Add Category
-          </button>
-        </div>
-      </div>
-    </div>
-  
-    <!-- Save Button -->
-    <div class="mt-6 flex justify-end">
+  <!-- Header -->
+  <div class="mb-6 text-center">
+    <h2 class="text-3xl font-bold text-blue-600 mb-2">Add New Game</h2>
+    <p class="text-gray-600">Fill out the form to create a new game</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="bg-white shadow-md rounded-lg">
+    <div class="flex border-b text-gray-600">
       <button
-        type="submit"
-        class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-        (click)="addGame()"
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'main'}"
+        (click)="setActiveTab('main')"
       >
-        Add Game
+        Main Info
+      </button>
+      <button
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'media'}"
+        (click)="setActiveTab('media')"
+      >
+        Media & Rating
+      </button>
+      <button
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'categories'}"
+        (click)="setActiveTab('categories')"
+      >
+        Categories
+      </button>
+      <button
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'platforms'}"
+        (click)="setActiveTab('platforms')"
+      >
+        Platforms
+      </button>
+      <button
+        class="w-full py-3 text-center focus:outline-none hover:text-blue-600"
+        [ngClass]="{'border-b-2 border-blue-600 text-blue-600': activeTab === 'screenshots'}"
+        (click)="setActiveTab('screenshots')"
+      >
+        Screenshots
       </button>
     </div>
+
+    <!-- Tab Content -->
+    <div class="p-6">
+      <!-- Main Info -->
+      <div *ngIf="activeTab === 'main'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            id="name"
+            type="text"
+            [(ngModel)]="game.Game_Name"
+            name="name"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+          <input
+            id="price"
+            type="number"
+            [(ngModel)]="game.Game_Price"
+            name="price"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div class="md:col-span-2">
+          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea
+            id="description"
+            [(ngModel)]="game.Game_Description"
+            name="description"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows="10"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Media & Rating -->
+      <div *ngIf="activeTab === 'media'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="backgroundImage" class="block text-sm font-medium text-gray-700">Background Image</label>
+          <input
+            id="backgroundImage"
+            type="text"
+            [(ngModel)]="game.Game_Background_Image"
+            name="backgroundImage"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label for="esrb" class="block text-sm font-medium text-gray-700">ESRB Rating</label>
+          <input
+            id="esrb"
+            type="text"
+            [(ngModel)]="game.Game_ESRB_Rating"
+            name="esrb"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label for="discount" class="block text-sm font-medium text-gray-700">Discount</label>
+          <input
+            id="discount"
+            type="number"
+            [(ngModel)]="game.Discount"
+            name="discount"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div *ngIf="activeTab === 'categories'" class="grid grid-cols-1 gap-4">
+        <div *ngFor="let category of game.Game_Category; let i = index" class="flex items-center">
+          <input
+            type="text"
+            [(ngModel)]="game.Game_Category[i]"
+            class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            (click)="removeItem('Game_Category', i)"
+            class="ml-2 p-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
+          >
+            Remove
+          </button>
+        </div>
+        <button
+          type="button"
+          (click)="addItem('Game_Category')"
+          class="flex items-center gap-2 px-4 py-2 text-white bg-green-500 rounded-lg"
+        >
+          Add Category
+        </button>
+      </div>
+
+      <!-- Platforms -->
+      <div *ngIf="activeTab === 'platforms'" class="grid grid-cols-1 gap-4">
+        <div *ngFor="let platform of game.Game_Platform; let i = index" class="flex items-center">
+          <input
+            type="text"
+            [(ngModel)]="game.Game_Platform[i]"
+            class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            (click)="removeItem('Game_Platform', i)"
+            class="ml-2 p-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
+          >
+            Remove
+          </button>
+        </div>
+        <button
+          type="button"
+          (click)="addItem('Game_Platform')"
+          class="flex items-center gap-2 px-4 py-2 text-white bg-green-500 rounded-lg"
+        >
+          Add Platform
+        </button>
+      </div>
+    </div>
   </div>
+
   
+
+  <!-- Save Button -->
+  <div class="mt-6 flex justify-end space-x-4">
+    <!-- back Button -->
+    <button
+    class="px-6 py-2 text-white bg-gray-600 rounded-lg hover:bg-gray-700"
+    (click)="goBack()"
+    >
+    Back
+    </button>
+    <button
+      type="submit"
+      class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+      (click)="addGame()"
+    >
+      Add Game
+    </button>
+  </div>
+
+</div>

@@ -76,5 +76,9 @@ export class GameAddComponent {
       console.error(`La propiedad ${listName} no es un array`);
     }
   }
+
+  goBack(): void {
+    this.router.navigate(['/games']);
+  }
   
 }

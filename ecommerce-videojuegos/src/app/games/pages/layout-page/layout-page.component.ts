@@ -72,7 +72,7 @@ export class LayoutPageComponent {
   viewStatistics(): void {
     console.log('Redirigiendo a la página de estadísticas...');
     this.isDropdownOpen = false;
-    this.router.navigate(['/admin/statistics']); // Ruta de estadísticas
+    this.router.navigate(['/admin/dashboard']); // Ruta de estadísticas
   }
 
   addGame(): void {
